@@ -15,6 +15,9 @@ const Body = styled.body`
     width:100%;
     height:100vh;
     box-sizing:border-box;
+    @media only screen and (max-width:750px){
+        padding:10px;
+    }
 `
 
 const Div = styled.div`
@@ -27,6 +30,9 @@ const Div = styled.div`
     width:70%;
     position:relative;
     overflow:hidden;
+    @media only screen and (max-width:750px){
+        width:90%;
+    }
 `
 const SmallText = styled.small`
     color:#515151;
