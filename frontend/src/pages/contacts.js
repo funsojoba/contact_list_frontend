@@ -2,10 +2,15 @@ import styled from "styled-components"
 import Card from "../components/card"
 import AddContact from "../components/addContact"
 import Input from '../components/input'
+import UserCard from "../components/userCard"
 import { useState } from "react"
 
-const Avatar = styled.a`
-    display:inline-block;
+import { connect } from "react-redux"
+import PropTypes from 'prop-types'
+
+import { getContact } from "../redux/actions/contacts/contact.action.js"
+
+const Avatar = styled.div`
     position:fixed;
     width:60px;
     height:60px;
@@ -17,6 +22,7 @@ const Avatar = styled.a`
     background-size:cover;
     background-position:center;
     transition: all ease 150ms;
+    cursor:pointer;
     &:hover{
         box-shadow:0px 5px 30px rgba(10, 136, 121, .3);
         transform:scale(1.1)
@@ -99,12 +105,17 @@ const SearchDiv = styled.div`
 
 const Contact = ()=>{
     const [toggle, setToggle] = useState(false)
+    const [toggleShow, setShow] = useState(false)
 
     const handleToggle = ()=>{
         setToggle(!toggle)
     }
     const handleClose = ()=>{
         setToggle(false)
+    }
+
+    const handleShow = ()=>{
+        setShow(!toggleShow)
     }
 
     return <>
@@ -132,8 +143,14 @@ const Contact = ()=>{
         <Icon onClick={handleToggle}>
             <i className="fas fa-plus fa-lg"></i>
         </Icon>
-        <Avatar href="/" ></Avatar>
+
+        <UserCard show={toggleShow ? '1' : '0'}/>
+        <Avatar onClick={handleShow}></Avatar>
     </>
 }
 
-export default Contact
+const mapStateToProps = state => ({
+    contacts:state.contacts.contacts
+})
+
+export default connect(mapStateToProps, {getContact})(Contact)
