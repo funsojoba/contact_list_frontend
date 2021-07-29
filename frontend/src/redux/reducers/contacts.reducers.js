@@ -4,9 +4,19 @@ const initialState = {
     contacts:[]
 }
 
-export default function(state=initialState, action){
+const contactReducer = (state=initialState, action)=>{
     switch (action.type) {
         case FETCH_CONTACT:
+            return{
+                ...state,
+                contacts:action.payload
+            }
+        case FETCH_CONTACT_FAILED:
+            return{
+                ...state,
+                contacts:action.payload
+            }
+        case FETCH_CONTACT_SUCCESSFUL:
             return{
                 ...state,
                 contacts:action.payload
@@ -16,3 +26,5 @@ export default function(state=initialState, action){
             return state
     }
 }
+
+export default contactReducer

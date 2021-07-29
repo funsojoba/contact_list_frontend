@@ -2,10 +2,11 @@ import styled from "styled-components";
 
 const Container = styled.div`
     margin:50px 10px 0;
-`
+    `
 
 const Div = styled.div`
     padding:30px;
+    background:#fff;
     position:relative;
     border-radius:30px;
     width:300px;

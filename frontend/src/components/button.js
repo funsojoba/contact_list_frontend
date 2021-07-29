@@ -19,11 +19,13 @@ const ButtonDiv = styled.button`
     }
 `
 
-const Button = ({children, handleClick, background, color})=>{
+const Button = ({children, handleClick, background, color, type})=>{
     return <ButtonDiv 
         background={background} 
         onClick={handleClick}
-        color={color}>
+        color={color}
+        type={type}
+        >
         {children}
     </ButtonDiv>
 }

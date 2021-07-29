@@ -1,5 +1,5 @@
 import Login from './pages/login';
-import SignUp from './pages/signup';
+import SignUp from './pages/register/signup';
 import Home from './pages/home';
 import Contact from './pages/contacts';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'

@@ -1,10 +1,4 @@
-import Button from "../components/button"
-import Input from "../components/input"
-import Img from "../components/img"
-
-import { Link } from "react-router-dom"
-
-import styled from 'styled-components'
+import styled from "styled-components"
 
 const Body = styled.body`
     padding:50px;
@@ -93,29 +87,22 @@ const Image = styled.div`
     }
 `
 
-const SignUp = ()=>{
-    return <Body>
-        <Div>
-        <Circle />
+const ErrorMsg = styled.small`
+    color:#FF2B5E;
+    font-size:.6em;
+    margin-bottom:5px ;
+`
 
-            <P>Let's get you started</P>
-            <Section>
-                <Form>
-                    <Input placeholder="First name" type="text" />
-                    <Input placeholder="Last name" type="text" />
-                    <Input placeholder="email" type="email" />
-                    <Input placeholder="password" type="password" />
-                    <Button>Signup</Button>
-                </Form>
 
-                <Image>
-                    <Img src="https://res.cloudinary.com/ddl2pf4qh/image/upload/v1627383456/contact_api/authpage/undraw_teacher_35j2_iu1wxk.png" alt="signup page"/>
-                </Image>
-            </Section>
-
-            <SmallText>Already have an account? &nbsp; <Link to="/login">Login</Link></SmallText>
-        </Div>
-    </Body>
+export {
+    Body,
+    Div,
+    SmallText,
+    Circle,
+    P,
+    Section,
+    Form,
+    Image,
+    ErrorMsg
 }
 
-export default SignUp

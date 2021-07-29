@@ -14,7 +14,7 @@ const Avatar = styled.div`
     position:fixed;
     width:60px;
     height:60px;
-    background:url("https://res.cloudinary.com/ddl2pf4qh/image/upload/v1627397427/contact_api/user_uaonlt.png");
+    background:url(${props => props.background ? props.backgorund : "https://res.cloudinary.com/ddl2pf4qh/image/upload/v1627554344/contact_api/ContactUser_ukg9ug.png"});
     right: 20px;
     bottom:20px;
     border:solid 3px #fff;
@@ -106,6 +106,8 @@ const SearchDiv = styled.div`
 const Contact = ()=>{
     const [toggle, setToggle] = useState(false)
     const [toggleShow, setShow] = useState(false)
+
+    
 
     const handleToggle = ()=>{
         setToggle(!toggle)

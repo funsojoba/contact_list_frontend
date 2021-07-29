@@ -19,12 +19,13 @@ const InputDiv = styled.input`
     }
 `
 
-const Input = ({ placeholder, hancleChange, value, type }) => {
-    return <InputDiv 
-        onChange={hancleChange} 
+const Input = ({ placeholder, onChange, value, type, name }) => {
+    return <InputDiv
+        onChange={onChange}
         placeholder={placeholder}
         value={value}
-        type={type} />
+        type={type}
+        name={name} />
 }
 
 export default Input
