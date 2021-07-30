@@ -1,12 +1,15 @@
 import Button from "../../components/button"
 import Input from "../../components/input"
 import Img from "../../components/img"
-import { useSelector, useDispatch } from 'react-redux'
+// import { useDispatch } from 'react-redux'
 
 import { Link } from "react-router-dom"
 import { Formik } from 'formik'
 
-import validate from "./signpu.validate"
+import { connect } from "react-redux"
+
+import validate from "./register.validate"
+import register from "./register"
 
 import {
     Body,
@@ -18,14 +21,13 @@ import {
     Form,
     Image,
     ErrorMsg
-} from './signupStyles'
+} from './registerStyles'
 
 
 
-const SignUp = () => {
-    const state = useSelector((state) => state.registerReducer)
-    console.log(state)
-    const dispatch = useDispatch()
+const Register = ({ registerData }) => {
+    console.log("registerData:", registerData)
+
     return <Body>
         <Div>
             <Circle />
@@ -38,14 +40,11 @@ const SignUp = () => {
                         lastname: "",
                         email: "",
                         password: ""
-                    }
-                    }
+                    }}
                     validationSchema={validate}
-                    onSubmit={
-                        async (values)=> {
-                            dispatch(values)
-                        }
-                    }>
+                    onSubmit={async (values) => {
+                            register(values)
+                        }}>
                     {({ values, errors, handleChange, handleSubmit }) => (
                         <Form onSubmit={handleSubmit}>
                             <Input
@@ -97,4 +96,8 @@ const SignUp = () => {
     </Body>
 }
 
-export default SignUp
+const mapStateToProps = (store) => ({
+    registerData: store.registerReducer
+})
+
+export default connect(mapStateToProps, { register })(Register)

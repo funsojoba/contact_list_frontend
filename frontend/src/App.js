@@ -1,7 +1,7 @@
 import Login from './pages/login';
-import SignUp from './pages/register/signup';
+import SignUp from './pages/register/register';
 import Home from './pages/home';
-import Contact from './pages/contacts';
+import Contact from './pages/contacts/contacts';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 
 import {Provider} from 'react-redux'

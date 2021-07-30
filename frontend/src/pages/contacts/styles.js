@@ -1,14 +1,5 @@
-import styled from "styled-components"
-import Card from "../components/card"
-import AddContact from "../components/addContact"
-import Input from '../components/input'
-import UserCard from "../components/userCard"
-import { useState } from "react"
+import styled from "styled-components";
 
-import { connect } from "react-redux"
-import PropTypes from 'prop-types'
-
-import { getContact } from "../redux/actions/contacts/contact.action.js"
 
 const Avatar = styled.div`
     position:fixed;
@@ -102,57 +93,13 @@ const SearchDiv = styled.div`
     align-items: center;
 `
 
-
-const Contact = ()=>{
-    const [toggle, setToggle] = useState(false)
-    const [toggleShow, setShow] = useState(false)
-
-    
-
-    const handleToggle = ()=>{
-        setToggle(!toggle)
-    }
-    const handleClose = ()=>{
-        setToggle(false)
-    }
-
-    const handleShow = ()=>{
-        setShow(!toggleShow)
-    }
-
-    return <>
-        <AddContact translate={toggle ? '0px' : '-500px'} handleClose={handleClose}/>
-        <Header>
-            <HeaderTitle>
-                <p>Contacts</p>
-                <SearchDiv>
-                    <Input type="search" placeholder="search" />
-                </SearchDiv>
-            </HeaderTitle>
-            <CountContainer>
-                <CounterDiv>12</CounterDiv>
-            </CountContainer>
-        </Header>
-        <CardWrapper>
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-        </CardWrapper>
-
-        <Icon onClick={handleToggle}>
-            <i className="fas fa-plus fa-lg"></i>
-        </Icon>
-
-        <UserCard show={toggleShow ? '1' : '0'}/>
-        <Avatar onClick={handleShow}></Avatar>
-    </>
+export {
+    Avatar,
+    Icon,
+    CardWrapper,
+    Header,
+    CounterDiv,
+    HeaderTitle,
+    CountContainer,
+    SearchDiv
 }
-
-const mapStateToProps = state => ({
-    contacts:state.contacts.contacts
-})
-
-export default connect(mapStateToProps, {getContact})(Contact)

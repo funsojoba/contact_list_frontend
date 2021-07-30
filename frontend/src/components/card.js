@@ -27,7 +27,7 @@ const ImageDiv = styled.div`
     height:180px;
     border-radius:30px;
     margin:auto;
-    background:url("https://res.cloudinary.com/ddl2pf4qh/image/upload/v1627230443/contact_api/ekebxsprc6m8c2oqgkvs.jpg");
+    background:url(${props => props.avatar ? props.avatar : "https://res.cloudinary.com/ddl2pf4qh/image/upload/v1627605865/contact_api/avatar3_chs26r.png"});
     background-size:cover;
     background-position: center;
 `
@@ -78,22 +78,22 @@ const Actions = styled.div`
 
 
 
-const Card = ()=>{
+const Card = ({firstname, lastname, email, phone, facebook, twitter, instagram, linkedin, avatar})=>{
     return <Container>
     <Div>
-        <ImageDiv/>
+        <ImageDiv avatar={avatar}/>
 
         <DetailDiv>
-            <Name><h3>David Kingston</h3></Name>
+            <Name><h3>{firstname} {lastname}</h3></Name>
             <Numbers>
-                <p>+234 545 23345</p>
-                <p>davidkingston@email.com</p>
+                <p>{phone}</p>
+                <p>{email}</p>
             </Numbers>
             <Socials>
-                <a href="/"><i className="fab fa-facebook"></i></a>
-                <a href="/"><i className="fab fa-twitter-square"></i></a>
-                <a href="/"><i className="fab fa-instagram"></i></a>
-                <a href="/"><i className="fab fa-linkedin"></i></a>
+                <a href={facebook}><i className="fab fa-facebook"></i></a>
+                <a href={twitter}><i className="fab fa-twitter-square"></i></a>
+                <a href={instagram}><i className="fab fa-instagram"></i></a>
+                <a href={linkedin}><i className="fab fa-linkedin"></i></a>
             </Socials>
 
             <Actions>

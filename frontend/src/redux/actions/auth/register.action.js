@@ -13,7 +13,7 @@ const registerFailed = (payload) => ({
 
 const register = (payload) => async (dispatch) => {
     try {
-        const res = await request.post("/auth/register/", payload);
+        const res = await axios.post("http://127.0.0.1:8000/auth/register/", payload);
         console.log(res)
         return dispatch(registerSuccess(res));
     } catch (error) {
