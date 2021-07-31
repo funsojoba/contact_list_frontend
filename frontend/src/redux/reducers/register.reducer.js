@@ -3,7 +3,8 @@ import { REGISTER, REGISTER_SUCCESS, REGISTER_FAILED } from "../actions/types";
 const initialState = {
     data:"",
     error:"",
-    loading:false
+    loading:false,
+    message:""
 }
 
 const registerReducer = (state=initialState, action) =>{
@@ -18,17 +19,19 @@ const registerReducer = (state=initialState, action) =>{
         case REGISTER_SUCCESS:
             return {
                 ...state,
-                data:payload,
+                data:payload.data,
                 error:null,
-                loading:false
+                loading:false,
+                message:payload.data
             }
             
         case REGISTER_FAILED:
             return {
                 ...state,
                 data:null,
-                error:payload,
-                loading:false
+                error:payload.data,
+                loading:false,
+                message:payload.data
             }
     
         default:

@@ -5,7 +5,7 @@ import registerReducer from './register.reducer'
 
 const rootReducer = combineReducers({
     contactReducer,
-    registerReducer
+    postRegister:registerReducer
 })
 
 export default rootReducer

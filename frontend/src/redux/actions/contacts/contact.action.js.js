@@ -1,4 +1,4 @@
-import { FETCH_CONTACT, FETCH_CONTACT_SUCCESSFUL, FETCH_CONTACT_FAILED} from "../types";
+import { FETCH_CONTACT_SUCCESSFUL, FETCH_CONTACT_FAILED} from "../types";
 import axios from 'axios'
 
 

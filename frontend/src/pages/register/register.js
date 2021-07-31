@@ -1,7 +1,6 @@
 import Button from "../../components/button"
 import Input from "../../components/input"
 import Img from "../../components/img"
-// import { useDispatch } from 'react-redux'
 
 import { Link } from "react-router-dom"
 import { Formik } from 'formik'
@@ -9,24 +8,15 @@ import { Formik } from 'formik'
 import { connect } from "react-redux"
 
 import validate from "./register.validate"
-import register from "./register"
+import register from "../../redux/actions/auth/register.action"
 
-import {
-    Body,
-    Div,
-    SmallText,
-    Circle,
-    P,
-    Section,
-    Form,
-    Image,
-    ErrorMsg
-} from './registerStyles'
+import { Body, Div, SmallText, Circle, P, Section, Form, Image, ErrorMsg } from './registerStyles'
 
 
 
-const Register = ({ registerData }) => {
+const Register = ({  registerData, register }) => {
     console.log("registerData:", registerData)
+    // const dispatch = useDispatch()
 
     return <Body>
         <Div>
@@ -36,49 +26,55 @@ const Register = ({ registerData }) => {
             <Section>
                 <Formik
                     initialValues={{
-                        firstname: "",
-                        lastname: "",
+                        first_name: "",
+                        last_name: "",
                         email: "",
                         password: ""
                     }}
                     validationSchema={validate}
                     onSubmit={async (values) => {
-                            register(values)
-                        }}>
-                    {({ values, errors, handleChange, handleSubmit }) => (
+                
+                        await register(values)
+                    }}>
+                    {({ values, errors, handleChange, handleSubmit, touched, handleBlur }) => (
                         <Form onSubmit={handleSubmit}>
                             <Input
                                 placeholder="First name"
                                 type="text"
-                                name="firstname"
-                                value={values.firstname}
+                                name="first_name"
+                                value={values.first_name}
                                 onChange={handleChange}
+                                onBlur={handleBlur}
                             />
-                            <ErrorMsg>{errors.firstname}</ErrorMsg>
+                            <ErrorMsg>{touched.first_name && errors.first_name ? (errors.first_name) : null}</ErrorMsg>
 
                             <Input
                                 placeholder="Last name"
                                 type="text"
-                                name="lastname"
-                                value={values.lastname}
+                                name="last_name"
+                                value={values.last_name}
+                                onBlur={handleBlur}
                                 onChange={handleChange} />
-                            <ErrorMsg>{errors.lastname}</ErrorMsg>
+                            <ErrorMsg>{touched.last_name && errors.last_name ? (errors.last_name) : (null)}</ErrorMsg>
+
 
                             <Input
                                 placeholder="email"
                                 type="email"
                                 name="email"
                                 value={values.email}
+                                onBlur={handleBlur}
                                 onChange={handleChange} />
-                            <ErrorMsg>{errors.email}</ErrorMsg>
+                            <ErrorMsg>{touched.email && errors.email ? (errors.email) : (null)}</ErrorMsg>
 
                             <Input
                                 placeholder="password"
                                 type="password"
                                 name="password"
+                                onBlur={handleBlur}
                                 value={values.password}
                                 onChange={handleChange} />
-                            <ErrorMsg>{errors.password}</ErrorMsg>
+                            <ErrorMsg>{touched.password && errors.password ? (errors.password) : (null)}</ErrorMsg>
 
 
                             <Button type="submit"> Signup</Button>
@@ -100,4 +96,8 @@ const mapStateToProps = (store) => ({
     registerData: store.registerReducer
 })
 
-export default connect(mapStateToProps, { register })(Register)
+// const mapDispatchToProps = dispatch => ({
+//     sendRegister: (value) => dispatch(register(value))
+// })
+
+export default connect(mapStateToProps, {register})(Register)
