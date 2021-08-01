@@ -1,4 +1,4 @@
-import { REGISTER, REGISTER_SUCCESS, REGISTER_FAILED } from "../types";
+import { REGISTER_SUCCESS, REGISTER_FAILED } from "../types";
 import axios from "axios";
 
 const registerSuccess = (payload) => ({
@@ -12,13 +12,13 @@ const registerFailed = (payload) => ({
 });
 
 const register = (payload) => async (dispatch) => {
-    try{
+    try {
         console.log('From payload',payload)
         const res = axios.post("http://127.0.0.1:8000/auth/register/", payload)
         console.log(res.data)
         return dispatch(registerSuccess(res))
-    }
-    catch (error){
+        
+    } catch (error) {
         console.log(error)
         return dispatch(registerFailed(error))
     }

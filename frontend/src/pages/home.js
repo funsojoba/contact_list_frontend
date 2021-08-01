@@ -82,7 +82,7 @@ const Home = ()=>{
                 <H1>Welcome to <br /> Kontat</H1>
                 <P>All your connections in one place, <br />
                     get in touch at the speed of light</P>
-                <MyLink />
+                <MyLink to="/signup" >Sign Up</MyLink>
             </TextWrapper>
         </TextDiv>
 

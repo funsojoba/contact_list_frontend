@@ -14,6 +14,7 @@ const StyledLink = styled.span`
         color:#fff;
         text-decoration:none;
         border-radius:10px;
+        text-align:center;
         
         &:hover{
             transform: translateY(-5px);
@@ -23,9 +24,9 @@ const StyledLink = styled.span`
 
 `
 
-const MyLink = ()=>{
+const MyLink = ({to, children})=>{
     return <StyledLink>
-        <Link to="/signup">Sign Up</Link>
+        <Link to={to}>{children}</Link>
     </StyledLink>
 }
 
