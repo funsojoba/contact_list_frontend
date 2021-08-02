@@ -19,19 +19,19 @@ const registerReducer = (state=initialState, action) =>{
         case REGISTER_SUCCESS:
             return {
                 ...state,
-                data:payload.data,
+                data:payload.data.data,
                 error:null,
                 loading:false,
-                message:payload.data
+                message:payload.data.message
             }
             
         case REGISTER_FAILED:
             return {
                 ...state,
                 data:null,
-                error:payload.data,
+                error:payload.error,
                 loading:false,
-                message:payload.data
+                message:payload.message
             }
     
         default:

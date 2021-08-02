@@ -1,6 +1,6 @@
 import Login from './pages/login/login';
 import SignUp from './pages/register/register';
-import Home from './pages/home';
+import Home from './pages/home/index';
 import Contact from './pages/contacts/contacts';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 import NotFound from './pages/notFount';
