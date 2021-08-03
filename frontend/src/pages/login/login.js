@@ -1,56 +1,74 @@
 import Button from "../../components/button"
 import Input from "../../components/input"
 import Img from "../../components/img"
-
-import { Link } from "react-router-dom"
-
-import { Body, Div, SmallText,Circle, Paragraph, Section, Form, Image} from './style'
+import validate from "./validate"
+import { Body, Div, SmallText, Circle, Paragraph, Section, Form, Image } from './style'
 import { ErrorMsg } from "../register/registerStyles"
 
+
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+import { useState } from "react"
+import { connect } from "react-redux"
+import { Link } from "react-router-dom"
 import { Formik } from "formik"
-import validate from "../register/register.validate"
 
 
-const Login = () => {
+import login from "../../redux/actions/auth/login.action"
+
+
+const Register = ({ loginData, login }) => {
+    console.log("registerData:", loginData)
+    const [loading, setLoading] = useState(false)
+
+
     return <Body>
         <Div>
             <Circle />
 
             <Paragraph>Welcome back</Paragraph>
             <Section>
-
+                <ToastContainer />
                 <Formik
-                validationSchema={validate}
-                initialValues={{
-                    email:"",
-                    password:""
-                }}
-                >
-                {({touched, errors, values, handleBlur, handleChange, handleSubmit})=>(
-                    <Form onSubmit={handleSubmit}>
-                        <Input 
-                            placeholder="email" 
-                            type="email"
-                            value={values.email}
-                            name="email" 
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            />
-                        <ErrorMsg>{touched.email && errors.email ? errors.email : null}</ErrorMsg>
-                        <Input 
-                            placeholder="password" 
-                            type="password" 
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.password}
-                            name="password"
-                            />
-                        <ErrorMsg>{touched.password && errors.password ? errors.password : null}</ErrorMsg>
-                        
-                        <Button>Login</Button>
-                    </Form>
+                    initialValues={{
+                        email: "",
+                        password: ""
+                    }}
+                    validationSchema={validate}
+                    onSubmit={async (values) => {
+                        console.log(values)
+                        setLoading(true)
+                        await login(values)
+                        setLoading(false)
+                    }}>
+                    {({ values, errors, handleChange, handleSubmit, touched, handleBlur }) => (
+                        <Form onSubmit={handleSubmit}>
 
-                )}
+                            <Input
+                                placeholder="email"
+                                type="email"
+                                name="email"
+                                value={values.email}
+                                onBlur={handleBlur}
+                                onChange={handleChange} />
+                            <ErrorMsg>{touched.email && errors.email ? (errors.email) : (null)}</ErrorMsg>
+
+                            <Input
+                                placeholder="password"
+                                type="password"
+                                name="password"
+                                onBlur={handleBlur}
+                                value={values.password}
+                                onChange={handleChange} />
+                            <ErrorMsg>{touched.password && errors.password ? (errors.password) : (null)}</ErrorMsg>
+                            <Button type="submit">
+                                {" "}
+                                {loading ? "" : "Log in"}
+                                {/* <PulseLoader loading={loading} /> */}
+                            </Button>
+                        </Form>
+                    )}
                 </Formik>
 
                 <Image>
@@ -63,4 +81,12 @@ const Login = () => {
     </Body>
 }
 
-export default Login
+const mapStateToProps = (store) => ({
+    loginData: store.loginReducer
+})
+
+// const mapDispatchToProps = dispatch => ({
+//     sendRegister: (value) => dispatch(register(value))
+// })
+
+export default connect(mapStateToProps, { login })(Register)

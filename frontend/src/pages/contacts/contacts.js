@@ -5,6 +5,7 @@ import UserCard from "../../components/userCard"
 
 import { useState, useEffect } from "react"
 import { connect } from "react-redux"
+import { Redirect } from "react-router-dom"
 
 import getContact from "../../redux/actions/contacts/contact.action.js.js"
 
@@ -16,7 +17,8 @@ import {
     CounterDiv,
     HeaderTitle,
     CountContainer,
-    SearchDiv
+    SearchDiv,
+    NoContact
 } from './styles'
 
 
@@ -36,9 +38,13 @@ const Contact = ({ contactsData, getContact }) => {
     const handleShow = () => {
         setShow(!toggleShow)
     }
-    // console.log(contactsData)
 
-    const cardData = contactsData.data
+    const logOut = ()=>{
+        localStorage.clear()
+        return <Redirect to='/'/>
+    }
+
+
     return <>
         <AddContact translate={toggle ? '0px' : '-500px'} handleClose={handleClose} />
         <Header>
@@ -48,10 +54,17 @@ const Contact = ({ contactsData, getContact }) => {
                     <Input type="search" placeholder="search" />
                 </SearchDiv>
             </HeaderTitle>
+
             <CountContainer>
                 <CounterDiv>{contactsData.count}</CounterDiv>
             </CountContainer>
         </Header>
+
+        {contactsData.count < 1 ? (
+            <CardWrapper>
+                <NoContact>You don't have any contacts yet</NoContact>
+            </CardWrapper>
+            ) :(
         <CardWrapper>
             {contactsData && contactsData.data && contactsData.data.map(card => (
                 <Card key={card.id}
@@ -66,12 +79,13 @@ const Contact = ({ contactsData, getContact }) => {
                     avatar={card.avatar} />))
             }
         </CardWrapper>
+        )}
 
         <Icon onClick={handleToggle}>
             <i className="fas fa-plus fa-lg"></i>
         </Icon>
 
-        <UserCard show={toggleShow ? '1' : '0'} />
+        <UserCard show={toggleShow ? '1' : '0'} logOut={logOut} />
         <Avatar onClick={handleShow}></Avatar>
     </>
 }
@@ -85,4 +99,3 @@ const mapDispatchToProps = dispatch => ({
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Contact)
-// export default Contact

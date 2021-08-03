@@ -53,11 +53,11 @@ const Talk = styled.div`
     right:10px;
 `
 
-const UserCard = ({show})=>{
+const UserCard = ({show, logOut})=>{
     return <Container show={show}>
         <Div>
             <Link to="/" >Update profile</Link>
-            <Link to="/" >Logout</Link>
+            <Link onClick={logOut} >Logout</Link>
         
         <Talk />
         </Div>

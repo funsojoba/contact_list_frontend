@@ -5,6 +5,8 @@ import Contact from './pages/contacts/contacts';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 import NotFound from './pages/notFount';
 
+import ProtectedRoute from './protected.route';
+
 import {Provider} from 'react-redux'
 import store from './redux/store';
 
@@ -25,9 +27,11 @@ function App() {
                 <SignUp></SignUp>
               </Route>
 
-              <Route path="/contacts">
+              {/* <Route path="/contacts">
                 <Contact></Contact>
-              </Route>
+              </Route> */}
+
+              <ProtectedRoute path="/contacts" exact component={Contact} />
 
               <Route component={NotFound} />
             </Switch>

@@ -22,7 +22,7 @@ const registerReducer = (state=initialState, action) =>{
                 data:payload.data.data,
                 error:null,
                 loading:false,
-                message:payload.data.message
+                message:payload.message
             }
             
         case REGISTER_FAILED:

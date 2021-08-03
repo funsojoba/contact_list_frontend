@@ -1,10 +1,12 @@
 import { LOGIN, LOGIN_FAILED, LOGIN_SUCCESS } from '../actions/types'
 
 const initialState = {
+    token:localStorage.getItem("token"),
     data: "",
     loading: false,
     error: "",
-    message: ""
+    message: "",
+    loggedIn:false
 }
 
 const loginReducer = (state = initialState, action) => {
@@ -16,12 +18,15 @@ const loginReducer = (state = initialState, action) => {
                 loading: true
             }
         case LOGIN_SUCCESS:
+            localStorage.setItem("token", payload.data.token)
             return {
                 ...state,
                 loading: true,
                 error: null,
-                data: payload.data,
-                message: payload.data
+                data: payload.data.token,
+                token: payload.data.token,
+                message: payload.data.message,
+                loggedIn:true
             }
 
         case LOGIN_FAILED:
@@ -30,7 +35,8 @@ const loginReducer = (state = initialState, action) => {
                 loading: false,
                 data: null,
                 message: payload.message,
-                error: payload.error
+                error: payload.error,
+                loggedIn:false
             }
 
         default:

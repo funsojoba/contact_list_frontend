@@ -93,6 +93,15 @@ const SearchDiv = styled.div`
     align-items: center;
 `
 
+const NoContact = styled.div`
+    color:#10BDA8;
+    box-shadow:0px 5px 30px rgba(10, 136, 121, .1);
+    background:#fff;
+    padding:30px;
+    width:300px;
+    border-radius:30px;
+`
+
 export {
     Avatar,
     Icon,
@@ -101,5 +110,7 @@ export {
     CounterDiv,
     HeaderTitle,
     CountContainer,
-    SearchDiv
+    SearchDiv,
+    NoContact
 }
+
