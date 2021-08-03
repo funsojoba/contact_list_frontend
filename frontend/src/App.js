@@ -4,6 +4,7 @@ import Home from './pages/home/index';
 import Contact from './pages/contacts/contacts';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 import NotFound from './pages/notFount';
+import UserProfile from './pages/user';
 
 import ProtectedRoute from './protected.route';
 
@@ -32,6 +33,7 @@ function App() {
               </Route> */}
 
               <ProtectedRoute path="/contacts" exact component={Contact} />
+              <ProtectedRoute path="/user" exact component={UserProfile} />
 
               <Route component={NotFound} />
             </Switch>

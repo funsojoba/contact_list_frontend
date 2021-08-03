@@ -56,7 +56,7 @@ const Talk = styled.div`
 const UserCard = ({ show, logOut }) => {
     return <Container show={show}>
         <Div>
-            <Link to="/" >Update profile</Link>
+            <Link to="/user" >Update profile</Link>
             <Link to="#" onClick={logOut} >Logout</Link>
 
             <Talk />

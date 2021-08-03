@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 const ButtonDiv = styled.button`
     padding:15px 25px;
-    background: ${props => props.background ? props.backgound : "#10BDA8"};
+    background: ${props => props.background ? props.background : "#10BDA8"};
     color:${props => props.color ? props.color : "#fff"};
     letter-spacing: 1.3;
     border-radius:12px;
@@ -12,6 +12,7 @@ const ButtonDiv = styled.button`
     width:100%;
     box-sizing:border-box;
     cursor:pointer;
+    border:solid 1px #10BDA8;
 
     &:hover{
         transform:translateY(-5px);

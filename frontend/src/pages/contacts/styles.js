@@ -51,48 +51,7 @@ const CardWrapper = styled.div`
     justify-content: space-around;
 `
 
-const Header = styled.div`
-    background:#fff;
-    box-shadow:0px 5px 30px rgba(10, 136, 121, .3);
-    color:#10BDA8;
-    position:relative;
-    padding:20px;
-    display:flex;
-    justify-content:space-between;
-    align-items: center;
-    @media only screen and (max-width:750px){
-        padding:10px
-    }
-`
 
-const Logo = styled.div`
-    width:50px;
-`
-
-const HeaderContent = styled.div`
-    flex:1;
-    display:flex;
-    align-items: center;
-    justify-content: center;
-`
-
-
-const CounterDiv = styled.div`
-    background:#10BDA8;
-    width:50px;
-    height:50px;
-    border-radius:20px;
-    color:#fff;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-`
-const HeaderTitle = styled.div`
-    flex:2;
-    display:flex;
-    justify-content: space-around;
-    align-items:center;
-`
 const CountContainer = styled.div`
     flex:1;
     display:flex;
@@ -114,17 +73,18 @@ const NoContact = styled.div`
     border-radius:30px;
 `
 
+const Wrapper = styled.div`
+    margin-top:60px
+`
+
 export {
     Avatar,
     Icon,
     CardWrapper,
-    Header,
-    CounterDiv,
-    HeaderTitle,
     CountContainer,
     SearchDiv,
     NoContact,
-    HeaderContent,
-    Logo
+    Wrapper
+    
 }
 
