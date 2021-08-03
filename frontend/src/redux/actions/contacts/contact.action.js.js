@@ -22,10 +22,8 @@ const getContact = () => dispatch => {
     axios.get('http://127.0.0.1:8000/api/v1/', headers(token))
         .then(res => {
             dispatch(fetchContactSuccess(res.data))
-            console.log(res)
         }).catch(err => {
             dispatch(fetchContactFailed(err))
-            console.log(err.response)
         })
 }
 

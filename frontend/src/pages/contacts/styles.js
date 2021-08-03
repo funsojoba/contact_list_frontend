@@ -59,13 +59,24 @@ const Header = styled.div`
     padding:20px;
     display:flex;
     justify-content:space-between;
-    p{
-        @media only screen and (max-width:750px){
-        display:none;
+    align-items: center;
+    @media only screen and (max-width:750px){
+        padding:10px
     }
-    }
-
 `
+
+const Logo = styled.div`
+    width:50px;
+`
+
+const HeaderContent = styled.div`
+    flex:1;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+`
+
+
 const CounterDiv = styled.div`
     background:#10BDA8;
     width:50px;
@@ -86,6 +97,7 @@ const CountContainer = styled.div`
     flex:1;
     display:flex;
     justify-content:flex-end;
+    background:#000;
 `
 
 const SearchDiv = styled.div`
@@ -111,6 +123,8 @@ export {
     HeaderTitle,
     CountContainer,
     SearchDiv,
-    NoContact
+    NoContact,
+    HeaderContent,
+    Logo
 }
 

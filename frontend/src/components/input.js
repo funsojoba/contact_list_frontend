@@ -11,7 +11,7 @@ const InputDiv = styled.input`
     transition: all ease-in 300ms;
     width:100%;
     box-sizing:border-box;
-    margin-bottom:15px;
+    margin-bottom:${props => props.bottom ? props.bottom : '15px'};
     outline:none;
 
     &:focus{
@@ -19,14 +19,15 @@ const InputDiv = styled.input`
     }
 `
 
-const Input = ({ placeholder, onChange, value, type, name, onBlur }) => {
+const Input = ({ placeholder, onChange, value, type, name, onBlur, bottom }) => {
     return <InputDiv
         onChange={onChange}
         placeholder={placeholder}
         value={value}
         type={type}
         name={name}
-        onBlur={onBlur} />
+        onBlur={onBlur}
+        bottom={bottom} />
 }
 
 export default Input

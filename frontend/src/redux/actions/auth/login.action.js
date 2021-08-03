@@ -1,6 +1,7 @@
 import axios from "axios";
 import { LOGIN_SUCCESS, LOGIN_FAILED } from "../types";
 import { toast } from "react-toastify";
+// import { Redirect } from "react-router-dom";
 
 const loginSuccess = (payload) => ({
     type: LOGIN_SUCCESS,
@@ -16,11 +17,10 @@ const login = (payload) =>{
     return function (dispatch){
         axios.post('http://127.0.0.1:8000/auth/login/', payload)
         .then(res =>{
-            console.log(res.data)
             toast.success('Welcome back')
             dispatch(loginSuccess(res))
+            
         }).catch(err => {
-            console.log(err)
             toast.error(err.response.data.error)
             dispatch(loginFailure(err.response.data))
         })

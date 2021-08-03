@@ -9,7 +9,7 @@ import { ErrorMsg } from "../register/registerStyles"
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { connect } from "react-redux"
 import { Link } from "react-router-dom"
 import { Formik } from "formik"
@@ -19,9 +19,19 @@ import login from "../../redux/actions/auth/login.action"
 
 
 const Register = ({ loginData, login }) => {
-    console.log("registerData:", loginData)
     const [loading, setLoading] = useState(false)
-
+    const [isLogin, setIsLogin] = useState(false)
+    
+    const testLogin = ()=>{
+        if(isLogin){
+            setInterval(()=>{
+                console.log('u don login o')
+            }, 2000)
+        }else{
+            return null
+        }
+    }
+    useEffect(()=>{}, [loginData])
 
     return <Body>
         <Div>
@@ -37,10 +47,10 @@ const Register = ({ loginData, login }) => {
                     }}
                     validationSchema={validate}
                     onSubmit={async (values) => {
-                        console.log(values)
                         setLoading(true)
                         await login(values)
                         setLoading(false)
+                        setIsLogin(true)
                     }}>
                     {({ values, errors, handleChange, handleSubmit, touched, handleBlur }) => (
                         <Form onSubmit={handleSubmit}>
@@ -70,7 +80,7 @@ const Register = ({ loginData, login }) => {
                         </Form>
                     )}
                 </Formik>
-
+                {testLogin()}
                 <Image>
                     <Img src="https://res.cloudinary.com/ddl2pf4qh/image/upload/v1627383456/contact_api/authpage/undraw_Login_re_4vu2_voo7zq.png" alt="login page" />
                 </Image>

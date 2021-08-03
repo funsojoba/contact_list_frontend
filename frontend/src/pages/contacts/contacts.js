@@ -2,31 +2,33 @@ import Card from "../../components/card"
 import AddContact from "../../components/addContact"
 import Input from '../../components/input'
 import UserCard from "../../components/userCard"
+import Img from "../../components/img"
+import Avatar from "../../components/avatar"
 
 import { useState, useEffect } from "react"
 import { connect } from "react-redux"
-import { Redirect } from "react-router-dom"
+import { Redirect, Link } from "react-router-dom"
 
 import getContact from "../../redux/actions/contacts/contact.action.js.js"
+import fetchUser from "../../redux/actions/contacts/user.action"
 
 import {
-    Avatar,
     Icon,
     CardWrapper,
     Header,
     CounterDiv,
-    HeaderTitle,
-    CountContainer,
-    SearchDiv,
-    NoContact
+    NoContact,
+    HeaderContent,
+    Logo
 } from './styles'
 
 
-const Contact = ({ contactsData, getContact }) => {
+const Contact = ({ contactsData, getContact, userData, getUser }) => {
     const [toggle, setToggle] = useState(false)
     const [toggleShow, setShow] = useState(false)
 
     useEffect(() => { getContact() }, [getContact])
+    useEffect(() => { getUser() }, [getUser])
 
     const handleToggle = () => {
         setToggle(!toggle)
@@ -48,16 +50,19 @@ const Contact = ({ contactsData, getContact }) => {
     return <>
         <AddContact translate={toggle ? '0px' : '-500px'} handleClose={handleClose} />
         <Header>
-            <HeaderTitle>
-                <p>Contacts</p>
-                <SearchDiv>
-                    <Input type="search" placeholder="search" />
-                </SearchDiv>
-            </HeaderTitle>
-
-            <CountContainer>
+            <HeaderContent>
+                <Logo>
+                    <Link to="/">
+                        <Img src="https://res.cloudinary.com/ddl2pf4qh/image/upload/v1627390182/contact_api/authpage/Kontat_logo_yahznt.png"/>
+                    </Link>
+                </Logo>
+            </HeaderContent>
+            <HeaderContent>
+                <Input type="search" placeholder="Search" bottom='0px' />
+            </HeaderContent>
+            <HeaderContent>
                 <CounterDiv>{contactsData.count}</CounterDiv>
-            </CountContainer>
+            </HeaderContent>
         </Header>
 
         {contactsData.count < 1 ? (
@@ -86,16 +91,18 @@ const Contact = ({ contactsData, getContact }) => {
         </Icon>
 
         <UserCard show={toggleShow ? '1' : '0'} logOut={logOut} />
-        <Avatar onClick={handleShow}></Avatar>
+        <Avatar background={`${userData.avatar}`} onClick={handleShow}></Avatar>
     </>
 }
 
 const mapStateToProps = state => ({
-    contactsData: state.contactReducer.contacts
+    contactsData: state.contactReducer.contacts,
+    userData : state.userReducer.user
 })
 
 const mapDispatchToProps = dispatch => ({
-    getContact: () => dispatch(getContact())
+    getContact: () => dispatch(getContact()),
+    getUser: () => dispatch(fetchUser())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Contact)
