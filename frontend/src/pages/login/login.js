@@ -18,20 +18,11 @@ import { Formik } from "formik"
 import login from "../../redux/actions/auth/login.action"
 
 
-const Register = ({ loginData, login }) => {
+const Register = ({ loginData, login }, props ) => {
     const [loading, setLoading] = useState(false)
     const [isLogin, setIsLogin] = useState(false)
     
-    const testLogin = ()=>{
-        if(isLogin){
-            setInterval(()=>{
-                console.log('u don login o')
-            }, 2000)
-        }else{
-            return null
-        }
-    }
-    useEffect(()=>{}, [loginData])
+    // useEffect(()=>{}, [loginData])
 
     return <Body>
         <Div>
@@ -51,6 +42,8 @@ const Register = ({ loginData, login }) => {
                         await login(values)
                         setLoading(false)
                         setIsLogin(true)
+                        
+
                     }}>
                     {({ values, errors, handleChange, handleSubmit, touched, handleBlur }) => (
                         <Form onSubmit={handleSubmit}>
@@ -80,7 +73,6 @@ const Register = ({ loginData, login }) => {
                         </Form>
                     )}
                 </Formik>
-                {testLogin()}
                 <Image>
                     <Img src="https://res.cloudinary.com/ddl2pf4qh/image/upload/v1627383456/contact_api/authpage/undraw_Login_re_4vu2_voo7zq.png" alt="login page" />
                 </Image>

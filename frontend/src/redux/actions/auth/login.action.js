@@ -19,6 +19,9 @@ const login = (payload) =>{
         .then(res =>{
             toast.success('Welcome back')
             dispatch(loginSuccess(res))
+            setInterval(function () {
+                window.location = "/contacts";
+            }, 2500);
             
         }).catch(err => {
             toast.error(err.response.data.error)

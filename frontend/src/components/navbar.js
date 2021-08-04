@@ -40,21 +40,21 @@ const Logo = styled.div`
 
 const HeaderContent = styled.div`
     flex:1;
-    display:flex;
+    display:${props => props.display ? props.display : 'flex'};
     align-items: center;
     justify-content: center;
 `
 
-const Header = ({ count }) => {
+const Header = ({ count, display }) => {
     return <HeaderDiv>
         <HeaderContent>
             <Logo>
                 <Link to="/">
-                    <Img src="https://res.cloudinary.com/ddl2pf4qh/image/upload/v1627390182/contact_api/authpage/Kontat_logo_yahznt.png" />
+                    <Img src="https://res.cloudinary.com/ddl2pf4qh/image/upload/v1628029248/contact_api/authpage/Group_23_lfxeeb.png" />
                 </Link>
             </Logo>
         </HeaderContent>
-        <HeaderContent>
+        <HeaderContent display={display}>
             <Input type="search" placeholder="Search" bottom='0px' />
         </HeaderContent>
         <HeaderContent>
