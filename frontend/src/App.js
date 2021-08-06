@@ -5,6 +5,7 @@ import Contact from './pages/contacts/contacts';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 import NotFound from './pages/notFount';
 import UserProfile from './pages/user';
+import DetailPage from './pages/contacts/detail';
 
 import ProtectedRoute from './protected.route';
 
@@ -28,12 +29,9 @@ function App() {
                 <SignUp></SignUp>
               </Route>
 
-              {/* <Route path="/contacts">
-                <Contact></Contact>
-              </Route> */}
-
               <ProtectedRoute path="/contacts" exact component={Contact} />
               <ProtectedRoute path="/user" exact component={UserProfile} />
+              <ProtectedRoute path="/detail" exact component={DetailPage} />
 
               <Route component={NotFound} />
             </Switch>

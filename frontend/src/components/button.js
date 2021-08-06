@@ -12,7 +12,7 @@ const ButtonDiv = styled.button`
     width:100%;
     box-sizing:border-box;
     cursor:pointer;
-    border:solid 1px #10BDA8;
+    border:${props => props.border ? props.border : 'solid 1px #10BDA8'};
 
     &:hover{
         transform:translateY(-5px);
@@ -20,12 +20,13 @@ const ButtonDiv = styled.button`
     }
 `
 
-const Button = ({children, handleClick, background, color, type})=>{
+const Button = ({ children, handleClick, background, color, type, border})=>{
     return <ButtonDiv 
         background={background} 
         onClick={handleClick}
         color={color}
         type={type}
+        border={border}
         >
         {children}
     </ButtonDiv>

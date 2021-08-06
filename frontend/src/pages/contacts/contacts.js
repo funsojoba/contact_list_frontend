@@ -11,6 +11,9 @@ import { Redirect } from "react-router-dom"
 import getContact from "../../redux/actions/contacts/contact.action.js.js"
 import fetchUser from "../../redux/actions/contacts/user.action"
 
+import MailModal from "../../components/mailModal"
+
+
 import {
     Icon,
     CardWrapper,
@@ -22,7 +25,8 @@ import {
 const Contact = ({ contactsData, getContact, userData, getUser }) => {
     const [toggle, setToggle] = useState(false)
     const [toggleShow, setShow] = useState(false)
-
+    const [mailModal, setMailModal] = useState(false)
+  
     useEffect(() => { getContact() }, [getContact])
     useEffect(() => { getUser() }, [getUser])
 
@@ -41,11 +45,16 @@ const Contact = ({ contactsData, getContact, userData, getUser }) => {
         localStorage.clear()
         return <Redirect to='/'/>
     }
+    const handleMail = ()=>{
+        setMailModal(!mailModal)
+        console.log(mailModal)
+    }
 
     return <>
         <AddContact translate={toggle ? '0px' : '-500px'} handleClose={handleClose} />
         <Header count={contactsData.count}>
         </Header>
+        <MailModal display={mailModal ? 'flex' : 'none'} close={()=> setMailModal(false)} ></MailModal>
         <Wrapper>
         {contactsData.count < 1 ? (
             <CardWrapper>
@@ -54,6 +63,7 @@ const Contact = ({ contactsData, getContact, userData, getUser }) => {
             ) :(
         <CardWrapper>
             {contactsData && contactsData.data && contactsData.data.map(card => (
+        
                 <Card key={card.id}
                     firstname={card.first_name}
                     lastname={card.last_name}
@@ -63,7 +73,9 @@ const Contact = ({ contactsData, getContact, userData, getUser }) => {
                     instagram={card.instagram}
                     linkedin={card.linkedin}
                     twitter={card.twitter}
-                    avatar={card.avatar} />))
+                    avatar={card.avatar} 
+                    handleMail={handleMail}
+                    />))
             }
         </CardWrapper>
         )}

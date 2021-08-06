@@ -74,7 +74,6 @@ export const Form = styled.form`
         padding:0;
         align-items:center;
     }
-    
 `
 export const Image = styled.div`
     flex: 1;

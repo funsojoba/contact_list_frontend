@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import MyLink from "./myLink";
 
 const Container = styled.div`
     margin:50px 10px 0;
@@ -8,10 +9,16 @@ const Div = styled.div`
     padding:30px;
     background:#fff;
     position:relative;
-    border-radius:30px;
+    border-radius:80px;
     width:300px;
     height:auto;
-    box-shadow: 0 6px 23px rgba(0,0,0,.06);
+    box-shadow: 0 6px 55px rgba(0,0,0,.06);
+    transition: all 120ms ease-in;
+    
+    &:hover{
+        box-shadow: 0 6px 55px rgba(0,0,0,.16);
+
+    }
 
     @media only screen and (max-width:750px){
         width:250px;
@@ -25,7 +32,7 @@ const Div = styled.div`
 const ImageDiv = styled.div`
     width: 180px;
     height:180px;
-    border-radius:30px;
+    border-radius:50%;
     margin:auto;
     background:url(${props => props.avatar ? props.avatar : "https://res.cloudinary.com/ddl2pf4qh/image/upload/v1627605865/contact_api/avatar3_chs26r.png"});
     background-size:cover;
@@ -45,14 +52,11 @@ const Name = styled.div`
 
 const Numbers = styled.div`
     border-bottom: solid 1px #D1D1D1;
-
     p{
         color:#525252;
     }
-
 `
 const Socials = styled.div`
-    border-bottom: solid 1px #D1D1D1;
     padding:10px;
     display:flex;
     justify-content:space-around;
@@ -62,23 +66,15 @@ const Socials = styled.div`
         display:inline-block;
     }
 `
-const Actions = styled.div`
-    padding:10px;
-    display:flex;
-    justify-content:space-around;
 
-    #mail{
-        color:#706DFF;
-    }
-    #edit{
-        color:#10BDA8;
-    }
-    #delete{color:#FF2B5E}
+const CardLink = styled.div`
+    display:flex;
+    justify-content:center;
+    padding-top: 7px;
 `
 
 
-
-const Card = ({firstname, lastname, email, phone, facebook, twitter, instagram, linkedin, avatar})=>{
+const Card = ({firstname, lastname, email, phone, facebook, twitter, instagram, linkedin, avatar, link})=>{
     return <Container>
     <Div>
         <ImageDiv avatar={avatar}/>
@@ -90,18 +86,16 @@ const Card = ({firstname, lastname, email, phone, facebook, twitter, instagram, 
                 <p>{email}</p>
             </Numbers>
             <Socials>
-                <a href={facebook}><i className="fab fa-facebook"></i></a>
-                <a href={twitter}><i className="fab fa-twitter-square"></i></a>
-                <a href={instagram}><i className="fab fa-instagram"></i></a>
-                <a href={linkedin}><i className="fab fa-linkedin"></i></a>
+                <a href={facebook} target="_blank" rel="noreferrer"><i className="fab fa-facebook"></i></a>
+                <a href={twitter} target="_blank" rel="noreferrer"><i className="fab fa-twitter-square"></i></a>
+                <a href={instagram} target="_blank" rel="noreferrer"><i className="fab fa-instagram"></i></a>
+                <a href={linkedin} target="_blank" rel="noreferrer"><i className="fab fa-linkedin"></i></a>
             </Socials>
-
-            <Actions>
-                <i id="mail" className="fas fa-mail-bulk fa-lg"></i>
-                <i id="edit" className="fas fa-edit fa-lg"></i>
-                <i id="delete" className="fas fa-trash fa-lg"></i>
-            </Actions>
         </DetailDiv>
+
+        <CardLink>
+            <MyLink to={link}>Visit</MyLink>
+        </CardLink>
     </Div>
     </Container>
 }

@@ -20,7 +20,7 @@ import login from "../../redux/actions/auth/login.action"
 
 const Register = ({ loginData, login }, props ) => {
     const [loading, setLoading] = useState(false)
-    const [isLogin, setIsLogin] = useState(false)
+    // const [isLogin, setIsLogin] = useState(false)
     
     // useEffect(()=>{}, [loginData])
 
@@ -41,9 +41,6 @@ const Register = ({ loginData, login }, props ) => {
                         setLoading(true)
                         await login(values)
                         setLoading(false)
-                        setIsLogin(true)
-                        
-
                     }}>
                     {({ values, errors, handleChange, handleSubmit, touched, handleBlur }) => (
                         <Form onSubmit={handleSubmit}>
