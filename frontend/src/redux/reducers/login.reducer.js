@@ -35,7 +35,7 @@ const loginReducer = (state = initialState, action) => {
                 loading: false,
                 data: null,
                 message: payload.message,
-                error: payload.error,
+                error: payload,
                 loggedIn:false
             }
 

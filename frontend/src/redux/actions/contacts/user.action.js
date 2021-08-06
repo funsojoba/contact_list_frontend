@@ -20,7 +20,7 @@ const fetchUser = () => dispatch =>{
         dispatch(fetchUserSuccess(res.data))
     }).catch(err => {
         dispatch(fetchUserFailed(err))
-        console.log(err.response)
+        console.log(err)
     })
 }
 

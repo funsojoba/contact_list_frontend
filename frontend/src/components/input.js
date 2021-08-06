@@ -19,7 +19,7 @@ const InputDiv = styled.input`
     }
 `
 
-const Input = ({ placeholder, onChange, value, type, name, onBlur, bottom }) => {
+const Input = ({ placeholder, onChange, value, type, name, onBlur, bottom, id }) => {
     return <InputDiv
         onChange={onChange}
         placeholder={placeholder}
@@ -27,7 +27,8 @@ const Input = ({ placeholder, onChange, value, type, name, onBlur, bottom }) => 
         type={type}
         name={name}
         onBlur={onBlur}
-        bottom={bottom} />
+        bottom={bottom}
+        id={id} />
 }
 
 export default Input

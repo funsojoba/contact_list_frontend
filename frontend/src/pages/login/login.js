@@ -9,7 +9,7 @@ import { ErrorMsg } from "../register/registerStyles"
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { connect } from "react-redux"
 import { Link } from "react-router-dom"
 import { Formik } from "formik"

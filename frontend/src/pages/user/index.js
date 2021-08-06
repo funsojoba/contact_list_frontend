@@ -3,7 +3,7 @@ import Button from '../../components/button'
 import Header from '../../components/navbar'
 import { Link } from 'react-router-dom'
 
-import { useEffect } from 'react'
+// import { useEffect } from 'react'
 
 import { connect } from 'react-redux'
 

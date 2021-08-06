@@ -25,7 +25,7 @@ const login = (payload) =>{
             
         }).catch(err => {
             toast.error(err.response.data.error)
-            dispatch(loginFailure(err.response.data))
+            dispatch(loginFailure(err))
         })
     }
 }
