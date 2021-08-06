@@ -69,12 +69,9 @@ const Contact = ({ contactsData, getContact, userData, getUser }) => {
                     lastname={card.last_name}
                     email={card.email}
                     phone={card.phone}
-                    facebook={card.facebook}
-                    instagram={card.instagram}
-                    linkedin={card.linkedin}
-                    twitter={card.twitter}
                     avatar={card.avatar} 
                     handleMail={handleMail}
+                    link={`detail/${card.id}`}
                     />))
             }
         </CardWrapper>

@@ -9,6 +9,7 @@ export const Body = styled.body`
     align-items:center;
     width:100%;
     height:100vh;
+    margin-top:70px;
     box-sizing:border-box;
    @media only screen and (max-width:750px){
         padding:12px;

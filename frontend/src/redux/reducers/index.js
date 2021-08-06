@@ -4,6 +4,7 @@ import registerReducer from './register.reducer'
 import loginReducer from './login.reducer'
 import userReducer from './user.reducer'
 import addContactReducer from './addContact.reducer'
+import sendMailReducer from './sendMail.reducer'
 
 
 const rootReducer = combineReducers({
@@ -11,7 +12,8 @@ const rootReducer = combineReducers({
     registerReducer,
     loginReducer,
     userReducer,
-    addContactReducer
+    addContactReducer,
+    sendMailReducer
 })
 
 export default rootReducer

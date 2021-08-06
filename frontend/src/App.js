@@ -5,8 +5,8 @@ import Contact from './pages/contacts/contacts';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 import NotFound from './pages/notFount';
 import UserProfile from './pages/user';
-import DetailPage from './pages/contacts/detail';
-
+// import DetailPage from './pages/contacts/detail';
+import DetailPage from './pages/contacts/detail/detail';
 import ProtectedRoute from './protected.route';
 
 import {Provider} from 'react-redux'
@@ -31,7 +31,7 @@ function App() {
 
               <ProtectedRoute path="/contacts" exact component={Contact} />
               <ProtectedRoute path="/user" exact component={UserProfile} />
-              <ProtectedRoute path="/detail" exact component={DetailPage} />
+              <ProtectedRoute path="/detail/:id" exact component={DetailPage} />
 
               <Route component={NotFound} />
             </Switch>

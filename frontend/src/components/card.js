@@ -56,16 +56,6 @@ const Numbers = styled.div`
         color:#525252;
     }
 `
-const Socials = styled.div`
-    padding:10px;
-    display:flex;
-    justify-content:space-around;
-
-    a{
-        color:#525252;
-        display:inline-block;
-    }
-`
 
 const CardLink = styled.div`
     display:flex;
@@ -74,7 +64,7 @@ const CardLink = styled.div`
 `
 
 
-const Card = ({firstname, lastname, email, phone, facebook, twitter, instagram, linkedin, avatar, link})=>{
+const Card = ({firstname, lastname, email, phone, avatar, link})=>{
     return <Container>
     <Div>
         <ImageDiv avatar={avatar}/>
@@ -85,12 +75,6 @@ const Card = ({firstname, lastname, email, phone, facebook, twitter, instagram, 
                 <p>{phone}</p>
                 <p>{email}</p>
             </Numbers>
-            <Socials>
-                <a href={facebook} target="_blank" rel="noreferrer"><i className="fab fa-facebook"></i></a>
-                <a href={twitter} target="_blank" rel="noreferrer"><i className="fab fa-twitter-square"></i></a>
-                <a href={instagram} target="_blank" rel="noreferrer"><i className="fab fa-instagram"></i></a>
-                <a href={linkedin} target="_blank" rel="noreferrer"><i className="fab fa-linkedin"></i></a>
-            </Socials>
         </DetailDiv>
 
         <CardLink>

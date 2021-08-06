@@ -1,129 +1,66 @@
-import Input from "../../components/input";
-import TextArea from "../../components/textArea";
-import Button from "../../components/button";
-import Img from "../../components/img";
-import Header from "../../components/navbar";
+import Input from "../../../components/input";
+import TextArea from "../../../components/textArea";
+import Button from "../../../components/button";
+import Header from "../../../components/navbar";
+import DeleteModal from "../../../components/deleteModal";
+import { Formik } from "formik";
 
-import styled from "styled-components";
+import { connect } from "react-redux";
+import { useState } from "react";
+
+import { Body, Container, DetailSection, ImageDiv, Name, NumberDiv, Socials, DeleteDiv, Form, Small, Arrow} from './detailStyle'
 
 
-const Body = styled.div`
-    background: #F9FAFF;
-    display:flex;
-    padding:30px;
-    flex-wrap:wrap;
-    margin-top:100px;
-`
-
-const Container = styled.div`
-    margin: 7.5px;
-    flex:1;
-    border-radius:50px;
-    box-shadow:0px 5px 30px rgba(10, 136, 121, .1);
-    padding:20px;
-`
-
-const DetailSection = styled.div`
-    width: 100%;
-`
-
-const ImageDiv = styled.div`
-    width: 180px;
-    height:180px;
-    border-radius:50%;
-    margin:auto;
-    background:url(${props => props.avatar ? props.avatar : "https://res.cloudinary.com/ddl2pf4qh/image/upload/v1627605865/contact_api/avatar3_chs26r.png"});
-    background-size:cover;
-    background-position: center;
-`
-
-const Name = styled.div`
-    border-bottom: solid 1px #D1D1D1;
-    h3{
-        color:#525252;
+const DetailPage = ({ detail }) => {
+    const previous = ()=>{
+        window.history.back()
     }
-`
 
-const NumberDiv = styled.div`
-    border-bottom: solid 1px #D1D1D1;
-    p{
-        color:#525252;
+    const [toggleModal, setToggleModal] = useState(false)
+
+    const toggle = ()=>{
+        setToggleModal(!toggleModal)
     }
-`
 
-const Socials = styled.div`
-    padding:10px;
-    display:flex;
-    justify-content:space-around;
+    const firstInitial = detail.first_name.slice(0, 1).toUpperCase()
+    const lastInitial = detail.last_name.slice(0, 1).toUpperCase()
 
-    a{
-        color:#525252;
-        display:inline-block;
-    }
-`
-
-const DeleteDiv = styled.div`
-    padding: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-`
-
-export const Form = styled.form`
-    display:flex;
-    flex:1;
-    flex-direction:column;
-    justify-content: space-around;
-    padding:20px;
-
-    @media only screen and (max-width:750px){
-        padding:0;
-        align-items:center;
-    }
-`
-
-const Small = styled.div`
-    text-align: center;
-    color: #10BDA8;
-`
-
-
-
-const DetailPage = ({ first_name, last_name, facebook, twitter, instagram, linkedin, number, email }) => {
     return <>
-        <Header />
+        <Header count={firstInitial + lastInitial} />
+        <DeleteModal name={detail.first_name} display={toggleModal ? 'flex' : 'none'} close={()=> setToggleModal(false)}></DeleteModal>
     <Body>
+            <Arrow onClick={previous}>
+                <i className="fas fa-long-arrow-alt-left fa-lg"></i>
+        </Arrow>
         <Container>
             <DetailSection>
-                <ImageDiv>
-                    <Img></Img>
-                </ImageDiv>
+                <ImageDiv avatar={detail.avatar}/>
 
                 <Name>
-                    <h3>{first_name} {last_name}</h3>
+                    <h3>{detail.first_name} {detail.last_name}</h3>
                 </Name>
 
                 <NumberDiv>
-                    <p>{number}</p>
-                    <p>{email}</p>
+                    <p>{detail.phone}</p>
+                    <p>{detail.email}</p>
                 </NumberDiv>
 
                 <Socials>
-                    <a href={facebook} target="_blank" rel="noreferrer"><i className="fab fa-facebook"></i></a>
-                    <a href={twitter} target="_blank" rel="noreferrer"><i className="fab fa-twitter-square"></i></a>
-                    <a href={instagram} target="_blank" rel="noreferrer"><i className="fab fa-instagram"></i></a>
-                    <a href={linkedin} target="_blank" rel="noreferrer"><i className="fab fa-linkedin"></i></a>
+                        {detail.facebook ? <a href={detail.facebook} target="_blank" rel="noreferrer"><i className="fab fa-facebook"></i></a> : null}
+                        {detail.twitter ? <a href={detail.twitter} target="_blank" rel="noreferrer"><i className="fab fa-twitter-square"></i></a> : null}
+                        {detail.instagram ? <a href={detail.instagram} target="_blank" rel="noreferrer"><i className="fab fa-instagram"></i></a> : null}
+                        {detail.linkedin ? <a href={detail.linkedin} target="_blank" rel="noreferrer"><i className="fab fa-linkedin"></i></a> : null}
                 </Socials>
 
                 <DeleteDiv>
-                    <Button border="none" background="#FF2A5D"> <i className="far fa-trash-alt fa-lg"></i> Delete</Button>
+                        <Button border="none" background="#FF2A5D" onClick={toggle}> <i className="far fa-trash-alt fa-lg"></i> Delete</Button>
                 </DeleteDiv>
             </DetailSection>
         </Container>
 
         <Container>
             <Small>
-                <p>Update {first_name}'s contact</p>
+                <p>Update {detail.first_name}'s contact</p>
             </Small>
             <Form>
                 <Input
@@ -193,8 +130,6 @@ const DetailPage = ({ first_name, last_name, facebook, twitter, instagram, linke
                     id="coverImage"
                 />
                 <Button
-                    background="#fff"
-                    color="#525252"
                     type="submit">Update Contact</Button>
             </Form>
 
@@ -202,8 +137,16 @@ const DetailPage = ({ first_name, last_name, facebook, twitter, instagram, linke
 
         <Container>
             <Small>
-                <p>Send mail to {first_name}</p>
+                <p>Send mail to {detail.first_name}</p>
             </Small>
+            <Formik
+            initialValues={{
+                subject:"",
+                message:""
+            }}
+            >
+
+            </Formik>
             <Form>
                 <Input placeholder="Subject"/>
                 <TextArea placeholder="Message"></TextArea>
@@ -214,4 +157,11 @@ const DetailPage = ({ first_name, last_name, facebook, twitter, instagram, linke
     </>
 }
 
-export default DetailPage
+const mapStateToProps = (state, ownProps)=>{
+    let id = ownProps.match.params.id
+    return {
+        detail : state.contactReducer.contacts.data.find(detail => detail.id === id)
+    }
+}
+
+export default connect(mapStateToProps)(DetailPage)

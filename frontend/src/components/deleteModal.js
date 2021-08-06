@@ -1,6 +1,6 @@
+
 import styled, { keyframes } from "styled-components";
 import Button from "./button";
-
 
 const slideIn = keyframes`
     0% {transform:translateY(-10px); opacity:0}
@@ -35,7 +35,12 @@ const DivWrapper = styled.div`
     `
 
 const Div = styled.div`
-width:100%
+    width:100%;
+
+    h3{
+        text-align:center;
+        color: #757575;
+    }
 `
 const Icon = styled.div`
     position: absolute;
@@ -55,6 +60,9 @@ const Icon = styled.div`
         }
     }
 `
+const Btns = styled.div`
+    display:flex;
+`
 
 
 const DeleteModal = ({ display, close, name }) => {
@@ -64,9 +72,11 @@ const DeleteModal = ({ display, close, name }) => {
                 <i onClick={close} className="fas fa-times-circle fa-2x"></i>
             </Icon>
             <Div>
-                <h3>Are you sure you want to delete {name}?</h3>
-                <Button >Cancle <i class="far fa-trash-alt"></i></Button>
-                <Button background="#FF2B5E">Delete <i class="far fa-trash-alt"></i></Button>
+                <h3>Are you sure you want to delete {name}'s contact?</h3>
+                <Btns>
+                    <Button onClick={close} >Cancle </Button> &nbsp;
+                    <Button background="#FF2B5E" border="none">Delete <i class="far fa-trash-alt"></i></Button>
+                </Btns>
             </Div>
         </DivWrapper>
     </Body>
