@@ -65,7 +65,7 @@ const Btns = styled.div`
 `
 
 
-const DeleteModal = ({ display, close, name }) => {
+const DeleteModal = ({ display, close, name, onClick }) => {
     return <Body display={display}>
         <DivWrapper>
             <Icon>
@@ -75,7 +75,7 @@ const DeleteModal = ({ display, close, name }) => {
                 <h3>Are you sure you want to delete {name}'s contact?</h3>
                 <Btns>
                     <Button onClick={close} >Cancle </Button> &nbsp;
-                    <Button background="#FF2B5E" border="none">Delete <i class="far fa-trash-alt"></i></Button>
+                    <Button onClick={onClick} background="#FF2B5E" border="none">Delete <i class="far fa-trash-alt"></i></Button>
                 </Btns>
             </Div>
         </DivWrapper>

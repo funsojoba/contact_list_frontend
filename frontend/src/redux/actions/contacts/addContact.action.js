@@ -19,15 +19,11 @@ const addContactSuccess = payload =>({
 const addContact = (payload)=> dispatch =>{
     axios.post('http://127.0.0.1:8000/api/v1/create-contact', payload, headers(token))
     .then(res =>{
-        console.log(res.data)
         dispatch(addContactSuccess(res.data))
         setInterval(function () {
             window.location = "/contacts";
         }, 1000);
     }).catch(err =>{
-        console.log("payload:", payload)
-        
-        console.log(err)
         dispatch(addContactFailed(err))
     })
 }

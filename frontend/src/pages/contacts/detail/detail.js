@@ -12,11 +12,12 @@ import { useState, useEffect } from "react";
 import sendMail from "../../../redux/actions/contacts/sendMail.action";
 import updateContact from "../../../redux/actions/contacts/updateContact.action";
 import getContactDetail from "../../../redux/actions/contacts/contactDetail.action";
+import deleteContact from "../../../redux/actions/contacts/deleteContact.action";
 
 import { Body, Container, DetailSection, ImageDiv, Name, NumberDiv, Socials, DeleteDiv, Form, Small, Arrow, ErrMsg } from './detailStyle'
 import validateMail from "./validateMail";
 
-const DetailPage = ({ sendMail, match, updateContact, getContactDetail, contactDetailData }) => {
+const DetailPage = ({ sendMail, match, updateContact, getContactDetail, contactDetailData, deleteContact }) => {
     let id = match.params.id
 
     useEffect(()=> getContactDetail(id), [getContactDetail, id])
@@ -36,7 +37,7 @@ const DetailPage = ({ sendMail, match, updateContact, getContactDetail, contactD
     return <>
         <ToastContainer />
         <Header count={firstInitial + lastInitial}  />
-        <DeleteModal name={contactDetailData.first_name} display={toggleModal ? 'flex' : 'none'} close={() => setToggleModal(false)}></DeleteModal>
+        <DeleteModal onClick={()=>deleteContact(id)} name={contactDetailData.first_name} display={toggleModal ? 'flex' : 'none'} close={() => setToggleModal(false)}></DeleteModal>
         <Body>
             <Arrow onClick={previous}>
                 <i className="fas fa-long-arrow-alt-left fa-lg"></i>
@@ -52,6 +53,7 @@ const DetailPage = ({ sendMail, match, updateContact, getContactDetail, contactD
                     <NumberDiv>
                         <p>{contactDetailData.phone}</p>
                          <p>{contactDetailData.email}</p>
+                         <p>{contactDetailData.state}</p>
                     </NumberDiv>
 
                     <Socials>
@@ -219,4 +221,4 @@ const mapStateToProps = (state, ownProps) => {
     }
 }
 
-export default connect(mapStateToProps, { sendMail, updateContact, getContactDetail })(DetailPage)
+export default connect(mapStateToProps, { sendMail, updateContact, getContactDetail, deleteContact })(DetailPage)

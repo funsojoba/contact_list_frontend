@@ -18,7 +18,6 @@ const contactDetailReducer = (state=initialState, action)=>{
                 ...state,
                 detail: payload
             }
-    
         default:
             return state;
     }

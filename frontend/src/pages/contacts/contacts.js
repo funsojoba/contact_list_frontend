@@ -8,6 +8,10 @@ import { useState, useEffect } from "react"
 import { connect } from "react-redux"
 import { Redirect } from "react-router-dom"
 
+import { ToastContainer } from "react-toastify"
+import 'react-toastify/dist/ReactToastify.css';
+
+
 import getContact from "../../redux/actions/contacts/contact.action.js.js"
 import fetchUser from "../../redux/actions/contacts/user.action"
 
@@ -51,6 +55,7 @@ const Contact = ({ contactsData, getContact, userData, getUser }) => {
     }
 
     return <>
+        <ToastContainer />
         <AddContact translate={toggle ? '0px' : '-500px'} handleClose={handleClose} />
         <Header count={contactsData.count}>
         </Header>
