@@ -22,7 +22,11 @@ function App() {
 
       <div className="App">
         <Router>
-        <PersistGate loading={<Loader />} persistor={persistor}>
+          <PersistGate loading={<Loader type="Puff"
+            color="#00BFFF"
+            height={100}
+            width={100}
+            timeout={3000} />} persistor={persistor}>
             <Switch>
               <Route path="/" exact>
                 <Home></Home>

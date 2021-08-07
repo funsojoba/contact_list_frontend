@@ -4,15 +4,18 @@ import Button from "../../../components/button";
 import Header from "../../../components/navbar";
 import DeleteModal from "../../../components/deleteModal";
 import { Formik } from "formik";
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 import { connect } from "react-redux";
 import { useState } from "react";
 import sendMail from "../../../redux/actions/contacts/sendMail.action";
+import updateContact from "../../../redux/actions/contacts/updateContact.action";
 
 import { Body, Container, DetailSection, ImageDiv, Name, NumberDiv, Socials, DeleteDiv, Form, Small, Arrow, ErrMsg } from './detailStyle'
 import validateMail from "./validateMail";
 
-const DetailPage = ( { detail, sendMail, match }) => {
+const DetailPage = ( { detail, sendMail, match, updateContact }) => {
     let id = match.params.id
     const previous = () => {
         window.history.back()
@@ -27,6 +30,7 @@ const DetailPage = ( { detail, sendMail, match }) => {
     const firstInitial = detail.first_name.slice(0, 1).toUpperCase()
     const lastInitial = detail.last_name.slice(0, 1).toUpperCase()
     return <>
+        <ToastContainer />
         <Header count={firstInitial + lastInitial}  />
         <DeleteModal name={detail.first_name} display={toggleModal ? 'flex' : 'none'} close={() => setToggleModal(false)}></DeleteModal>
         <Body>
@@ -76,6 +80,12 @@ const DetailPage = ( { detail, sendMail, match }) => {
                         state: "",
                         avatar: "",
                     }}
+                    onSubmit={
+                        async (values) =>{
+                            await updateContact(values, id)
+                            console.log(values)
+                        }
+                    }
                 >
                     {({handleBlur, handleChange, handleSubmit, errors, values, touched})=>(
 
@@ -145,14 +155,6 @@ const DetailPage = ( { detail, sendMail, match }) => {
                             value={values.state}
                             onBlur={handleBlur}
                             name="state" />
-                        <Input
-                            placeholder="User image"
-                            type="file"
-                            onChange={handleChange}
-                            value={values.avatar}
-                            name="avatar"
-                            id="coverImage"
-                        />
                         <Button
                             type="submit">Update Contact</Button>
                     </Form>
@@ -172,9 +174,7 @@ const DetailPage = ( { detail, sendMail, match }) => {
                     }}
                     validationSchema={validateMail}
                     onSubmit={ async (values) => {
-                        console.log(values)
                         await sendMail(values, id)
-                        // console.log(id)
                     }}
                 >
                     {({ values, errors, handleBlur, handleChange, handleSubmit, touched }) => (
@@ -209,9 +209,9 @@ const mapStateToProps = (state, ownProps) => {
     let id = ownProps.match.params.id
     return {
         detail: state.contactReducer.contacts.data.find(detail => detail.id === id),
-        // detail: state.contactReducer,
-        sendMail: state.sendMailReducer
+        sendMailDetail: state.sendMailReducer,
+        updateContact: state.updateContactReducer
     }
 }
 
-export default connect(mapStateToProps, { sendMail })(DetailPage)
+export default connect(mapStateToProps, { sendMail, updateContact })(DetailPage)
