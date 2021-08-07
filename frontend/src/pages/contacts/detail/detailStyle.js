@@ -101,3 +101,7 @@ export const Arrow = styled.div`
     cursor:pointer;
 `
 
+export const ErrMsg = styled.small`
+    color: #FF2A5D;
+    margin-bottom: 5px;
+`

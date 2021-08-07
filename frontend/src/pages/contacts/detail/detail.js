@@ -7,11 +7,12 @@ import { Formik } from "formik";
 
 import { connect } from "react-redux";
 import { useState } from "react";
+import sendMail from "../../../redux/actions/contacts/sendMail.action";
 
-import { Body, Container, DetailSection, ImageDiv, Name, NumberDiv, Socials, DeleteDiv, Form, Small, Arrow} from './detailStyle'
+import { Body, Container, DetailSection, ImageDiv, Name, NumberDiv, Socials, DeleteDiv, Form, Small, Arrow, ErrMsg} from './detailStyle'
+import validateMail from "./validateMail";
 
-
-const DetailPage = ({ detail }) => {
+const DetailPage = ({ detail, sendMail }) => {
     const previous = ()=>{
         window.history.back()
     }
@@ -144,14 +145,34 @@ const DetailPage = ({ detail }) => {
                 subject:"",
                 message:""
             }}
+            validationSchema={validateMail}
+            onSubmit={(values)=>{
+                console.log(values)
+            }}
             >
+            {({values, errors, handleBlur, handleChange, handleSubmit, touched})=>(
+                <Form onSubmit={handleSubmit}>
+                    <Input 
+                        value={values.subject} 
+                        onBlur={handleBlur} 
+                        onChange={handleChange} 
+                        placeholder="Subject"
+                        name="subject"
+                        type="text"
+                        />
+                    <ErrMsg>{touched.subject && errors.subject ? errors.subject : null}</ErrMsg>
+                    <TextArea 
+                        placeholder="Message"
+                        value={values.message}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        name="message"></TextArea>
+                    <ErrMsg>{touched.message && errors.message ? errors.message : null}</ErrMsg>
 
+                    <Button type="submit"> <i class="far fa-paper-plane"></i> Send mail</Button>
+                </Form>
+            )}
             </Formik>
-            <Form>
-                <Input placeholder="Subject"/>
-                <TextArea placeholder="Message"></TextArea>
-                    <Button > <i class="far fa-paper-plane"></i> Send mail</Button>
-            </Form>
         </Container>
     </Body>
     </>
@@ -160,7 +181,8 @@ const DetailPage = ({ detail }) => {
 const mapStateToProps = (state, ownProps)=>{
     let id = ownProps.match.params.id
     return {
-        detail : state.contactReducer.contacts.data.find(detail => detail.id === id)
+        detail : state.contactReducer.contacts.data.find(detail => detail.id === id),
+        sendMail : state.sendMailReducer
     }
 }
 
