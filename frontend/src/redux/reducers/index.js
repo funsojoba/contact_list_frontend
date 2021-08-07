@@ -6,6 +6,7 @@ import userReducer from './user.reducer'
 import addContactReducer from './addContact.reducer'
 import sendMailReducer from './sendMail.reducer'
 import updateContactReducer from './updateContact.reducer'
+import contactDetailReducer from './contactDetail.reducer'
 
 import storage from 'redux-persist/lib/storage'
 import { persistReducer } from 'redux-persist'
@@ -23,7 +24,8 @@ const rootReducer = combineReducers({
     userReducer,
     addContactReducer,
     sendMailReducer,
-    updateContactReducer
+    updateContactReducer,
+    contactDetailReducer
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)

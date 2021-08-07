@@ -8,15 +8,19 @@ import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
 import { connect } from "react-redux";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import sendMail from "../../../redux/actions/contacts/sendMail.action";
 import updateContact from "../../../redux/actions/contacts/updateContact.action";
+import getContactDetail from "../../../redux/actions/contacts/contactDetail.action";
 
 import { Body, Container, DetailSection, ImageDiv, Name, NumberDiv, Socials, DeleteDiv, Form, Small, Arrow, ErrMsg } from './detailStyle'
 import validateMail from "./validateMail";
 
-const DetailPage = ( { detail, sendMail, match, updateContact }) => {
+const DetailPage = ({ sendMail, match, updateContact, getContactDetail, contactDetailData }) => {
     let id = match.params.id
+
+    useEffect(()=> getContactDetail(id), [getContactDetail, id])
+
     const previous = () => {
         window.history.back()
     }
@@ -27,34 +31,34 @@ const DetailPage = ( { detail, sendMail, match, updateContact }) => {
         setToggleModal(!toggleModal)
     }
 
-    const firstInitial = detail.first_name.slice(0, 1).toUpperCase()
-    const lastInitial = detail.last_name.slice(0, 1).toUpperCase()
+    const firstInitial = contactDetailData.first_name.slice(0, 1).toUpperCase()
+    const lastInitial = contactDetailData.last_name.slice(0, 1).toUpperCase()
     return <>
         <ToastContainer />
         <Header count={firstInitial + lastInitial}  />
-        <DeleteModal name={detail.first_name} display={toggleModal ? 'flex' : 'none'} close={() => setToggleModal(false)}></DeleteModal>
+        <DeleteModal name={contactDetailData.first_name} display={toggleModal ? 'flex' : 'none'} close={() => setToggleModal(false)}></DeleteModal>
         <Body>
             <Arrow onClick={previous}>
                 <i className="fas fa-long-arrow-alt-left fa-lg"></i>
             </Arrow>
             <Container>
                 <DetailSection>
-                    <ImageDiv avatar={detail.avatar} />
+                    <ImageDiv avatar={contactDetailData.avatar} />
 
                     <Name>
-                        <h3>{detail.first_name} {detail.last_name}</h3>
+                        <h3>{contactDetailData.first_name} {contactDetailData.last_name}</h3>
                     </Name>
 
                     <NumberDiv>
-                        <p>{detail.phone}</p>
-                         <p>{detail.email}</p>
+                        <p>{contactDetailData.phone}</p>
+                         <p>{contactDetailData.email}</p>
                     </NumberDiv>
 
                     <Socials>
-                        {detail.facebook ? <a href={detail.facebook} target="_blank" rel="noreferrer"><i className="fab fa-facebook"></i></a> : null}
-                        {detail.twitter ? <a href={detail.twitter} target="_blank" rel="noreferrer"><i className="fab fa-twitter-square"></i></a> : null}
-                        {detail.instagram ? <a href={detail.instagram} target="_blank" rel="noreferrer"><i className="fab fa-instagram"></i></a> : null}
-                        {detail.linkedin ? <a href={detail.linkedin} target="_blank" rel="noreferrer"><i className="fab fa-linkedin"></i></a> : null}
+                        {contactDetailData.facebook ? <a href={contactDetailData.facebook} target="_blank" rel="noreferrer"><i className="fab fa-facebook"></i></a> : null}
+                        {contactDetailData.twitter ? <a href={contactDetailData.twitter} target="_blank" rel="noreferrer"><i className="fab fa-twitter-square"></i></a> : null}
+                        {contactDetailData.instagram ? <a href={contactDetailData.instagram} target="_blank" rel="noreferrer"><i className="fab fa-instagram"></i></a> : null}
+                        {contactDetailData.linkedin ? <a href={contactDetailData.linkedin} target="_blank" rel="noreferrer"><i className="fab fa-linkedin"></i></a> : null}
                     </Socials>
 
                     <DeleteDiv>
@@ -65,7 +69,7 @@ const DetailPage = ( { detail, sendMail, match, updateContact }) => {
 
             <Container>
                 <Small>
-                    <p>Update {detail.first_name}'s contact</p>
+                    <p>Update {contactDetailData.first_name}'s contact</p>
                 </Small>
                 <Formik
                     initialValues={{
@@ -91,7 +95,7 @@ const DetailPage = ( { detail, sendMail, match, updateContact }) => {
 
                     <Form onSubmit={handleSubmit}>
                         <Input
-                            placeholder={detail.first_name}
+                            placeholder={contactDetailData.first_name}
                             type="text"
                             onChange={handleChange}
                             value={values.first_name}
@@ -99,7 +103,7 @@ const DetailPage = ( { detail, sendMail, match, updateContact }) => {
                             name="first_name" />
 
                         <Input
-                            placeholder={detail.last_name}
+                            placeholder={contactDetailData.last_name}
                             type="text"
                             onChange={handleChange}
                             value={values.last_name}
@@ -107,49 +111,49 @@ const DetailPage = ( { detail, sendMail, match, updateContact }) => {
                             name="last_name" />
 
                         <Input
-                            placeholder={detail.email ? detail.email : "email"}
+                            placeholder={contactDetailData.email ? contactDetailData.email : "email"}
                             type="email"
                             onChange={handleChange}
                             value={values.email}
                             onBlur={handleBlur}
                             name="email" />
                         <Input
-                            placeholder={detail.phone ? detail.phone : "phone"}
+                            placeholder={contactDetailData.phone ? contactDetailData.phone : "phone"}
                             type="tel"
                             onChange={handleChange}
                             value={values.phone}
                             onBlur={handleBlur}
                             name="phone" />
                         <Input
-                            placeholder={detail.facebook ? detail.facebook : "facebook"}
+                            placeholder={contactDetailData.facebook ? contactDetailData.facebook : "facebook"}
                             type="text"
                             onChange={handleChange}
                             value={values.facebook}
                             onBlur={handleBlur}
                             name="facebook" />
                         <Input
-                            placeholder={detail.instagram ? detail.instagram : "instagram"}
+                            placeholder={contactDetailData.instagram ? contactDetailData.instagram : "instagram"}
                             type="text"
                                 onBlur={handleBlur}
                             onChange={handleChange}
                             value={values.instagram}
                             name="instagram" />
                         <Input
-                            placeholder={detail.twitter ? detail.twitter : "twitter"}
+                            placeholder={contactDetailData.twitter ? contactDetailData.twitter : "twitter"}
                             type="text"
                             onChange={handleChange}
                             value={values.twitter}
                             onBlur={handleBlur}
                             name="twitter" />
                         <Input
-                            placeholder={detail.linkedin ? detail.linkedin : "linkedin"}
+                            placeholder={contactDetailData.linkedin ? contactDetailData.linkedin : "linkedin"}
                             type="text"
                             onChange={handleChange}
                             value={values.linkedin}
                             onBlur={handleBlur}
                             name="linkedin" />
                         <Input
-                            placeholder={detail.state ? detail.state : "state"}
+                            placeholder={contactDetailData.state ? contactDetailData.state : "state"}
                             type="text"
                             onChange={handleChange}
                             value={values.state}
@@ -165,7 +169,7 @@ const DetailPage = ( { detail, sendMail, match, updateContact }) => {
 
             <Container>
                 <Small>
-                    <p>Send mail to {detail.first_name}</p>
+                    <p>Send mail to {contactDetailData.first_name}</p>
                 </Small>
                 <Formik
                     initialValues={{
@@ -206,12 +210,13 @@ const DetailPage = ( { detail, sendMail, match, updateContact }) => {
 }
 
 const mapStateToProps = (state, ownProps) => {
-    let id = ownProps.match.params.id
+    // let id = ownProps.match.params.id
     return {
-        detail: state.contactReducer.contacts.data.find(detail => detail.id === id),
+        // detail: state.contactReducer.contacts.data.find(detail => detail.id === id),
         sendMailDetail: state.sendMailReducer,
-        updateContact: state.updateContactReducer
+        updateContact: state.updateContactReducer,
+        contactDetailData: state.contactDetailReducer.detail
     }
 }
 
-export default connect(mapStateToProps, { sendMail, updateContact })(DetailPage)
+export default connect(mapStateToProps, { sendMail, updateContact, getContactDetail })(DetailPage)
