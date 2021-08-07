@@ -9,181 +9,209 @@ import { connect } from "react-redux";
 import { useState } from "react";
 import sendMail from "../../../redux/actions/contacts/sendMail.action";
 
-import { Body, Container, DetailSection, ImageDiv, Name, NumberDiv, Socials, DeleteDiv, Form, Small, Arrow, ErrMsg} from './detailStyle'
+import { Body, Container, DetailSection, ImageDiv, Name, NumberDiv, Socials, DeleteDiv, Form, Small, Arrow, ErrMsg } from './detailStyle'
 import validateMail from "./validateMail";
 
-const DetailPage = ({ detail, sendMail }) => {
-    const previous = ()=>{
+const DetailPage = ( { detail, sendMail, match }) => {
+    let id = match.params.id
+    const previous = () => {
         window.history.back()
     }
 
     const [toggleModal, setToggleModal] = useState(false)
 
-    const toggle = ()=>{
+    const toggle = () => {
         setToggleModal(!toggleModal)
     }
 
     const firstInitial = detail.first_name.slice(0, 1).toUpperCase()
     const lastInitial = detail.last_name.slice(0, 1).toUpperCase()
-
     return <>
-        <Header count={firstInitial + lastInitial} />
-        <DeleteModal name={detail.first_name} display={toggleModal ? 'flex' : 'none'} close={()=> setToggleModal(false)}></DeleteModal>
-    <Body>
+        <Header count={firstInitial + lastInitial}  />
+        <DeleteModal name={detail.first_name} display={toggleModal ? 'flex' : 'none'} close={() => setToggleModal(false)}></DeleteModal>
+        <Body>
             <Arrow onClick={previous}>
                 <i className="fas fa-long-arrow-alt-left fa-lg"></i>
-        </Arrow>
-        <Container>
-            <DetailSection>
-                <ImageDiv avatar={detail.avatar}/>
+            </Arrow>
+            <Container>
+                <DetailSection>
+                    <ImageDiv avatar={detail.avatar} />
 
-                <Name>
-                    <h3>{detail.first_name} {detail.last_name}</h3>
-                </Name>
+                    <Name>
+                        <h3>{detail.first_name} {detail.last_name}</h3>
+                    </Name>
 
-                <NumberDiv>
-                    <p>{detail.phone}</p>
-                    <p>{detail.email}</p>
-                </NumberDiv>
+                    <NumberDiv>
+                        <p>{detail.phone}</p>
+                         <p>{detail.email}</p>
+                    </NumberDiv>
 
-                <Socials>
+                    <Socials>
                         {detail.facebook ? <a href={detail.facebook} target="_blank" rel="noreferrer"><i className="fab fa-facebook"></i></a> : null}
                         {detail.twitter ? <a href={detail.twitter} target="_blank" rel="noreferrer"><i className="fab fa-twitter-square"></i></a> : null}
                         {detail.instagram ? <a href={detail.instagram} target="_blank" rel="noreferrer"><i className="fab fa-instagram"></i></a> : null}
                         {detail.linkedin ? <a href={detail.linkedin} target="_blank" rel="noreferrer"><i className="fab fa-linkedin"></i></a> : null}
-                </Socials>
+                    </Socials>
 
-                <DeleteDiv>
+                    <DeleteDiv>
                         <Button border="none" background="#FF2A5D" onClick={toggle}> <i className="far fa-trash-alt fa-lg"></i> Delete</Button>
-                </DeleteDiv>
-            </DetailSection>
-        </Container>
+                    </DeleteDiv>
+                </DetailSection>
+            </Container>
 
-        <Container>
-            <Small>
-                <p>Update {detail.first_name}'s contact</p>
-            </Small>
-            <Form>
-                <Input
-                    placeholder="First name"
-                    type="text"
-                    // onChange={handleChange}
-                    // value={values.first_name}
-                    // onBlur={handleBlur}
-                    name="first_name" />
-                {/* <small>{touched.first_name && errors.first_name ? errors.first_name : null}</small> */}
-                <Input
-                    placeholder="Last name"
-                    type="text"
-                    // onChange={handleChange}
-                    // value={values.last_name}
-                    // onBlur={handleBlur}
-                    name="last_name" />
-                {/* <small>{touched.last_name && errors.last_name ? errors.last_name : null}</small> */}
-                <Input
-                    placeholder="Email"
-                    type="email"
-                    // onChange={handleChange}
-                    // value={values.email}
-                    name="email" />
-                <Input
-                    placeholder="Phone number"
-                    type="tel"
-                    // onChange={handleChange}
-                    // value={values.phone}
-                    name="phone" />
-                <Input
-                    placeholder="Facebook"
-                    type="text"
-                    // onChange={handleChange}
-                    // value={values.facebook}
-                    name="facebook" />
-                <Input
-                    placeholder="Instagram"
-                    type="text"
-                    // onChange={handleChange}
-                    // value={values.instagram}
-                    name="instagram" />
-                <Input
-                    placeholder="Twitter"
-                    type="text"
-                    // onChange={handleChange}
-                    // value={values.twitter}
-                    name="twitter" />
-                <Input
-                    placeholder="Linkedin"
-                    type="text"
-                    // onChange={handleChange}
-                    // value={values.linkedin}
-                    name="linkedin" />
-                <Input
-                    placeholder="State"
-                    type="text"
-                    // onChange={handleChange}
-                    // value={values.state}
-                    name="state" />
-                <Input
-                    placeholder="User image"
-                    type="file"
-                    // onChange={handleChange}
-                    // value={values.avatar}
-                    name="avatar"
-                    id="coverImage"
-                />
-                <Button
-                    type="submit">Update Contact</Button>
-            </Form>
+            <Container>
+                <Small>
+                    <p>Update {detail.first_name}'s contact</p>
+                </Small>
+                <Formik
+                    initialValues={{
+                        first_name: "",
+                        last_name: "",
+                        email: "",
+                        phone: "",
+                        facebook: "",
+                        instagram: "",
+                        twitter: "",
+                        linkedin: "",
+                        state: "",
+                        avatar: "",
+                    }}
+                >
+                    {({handleBlur, handleChange, handleSubmit, errors, values, touched})=>(
 
-        </Container>
+                    <Form onSubmit={handleSubmit}>
+                        <Input
+                            placeholder={detail.first_name}
+                            type="text"
+                            onChange={handleChange}
+                            value={values.first_name}
+                            onBlur={handleBlur}
+                            name="first_name" />
 
-        <Container>
-            <Small>
-                <p>Send mail to {detail.first_name}</p>
-            </Small>
-            <Formik
-            initialValues={{
-                subject:"",
-                message:""
-            }}
-            validationSchema={validateMail}
-            onSubmit={(values)=>{
-                console.log(values)
-            }}
-            >
-            {({values, errors, handleBlur, handleChange, handleSubmit, touched})=>(
-                <Form onSubmit={handleSubmit}>
-                    <Input 
-                        value={values.subject} 
-                        onBlur={handleBlur} 
-                        onChange={handleChange} 
-                        placeholder="Subject"
-                        name="subject"
-                        type="text"
+                        <Input
+                            placeholder={detail.last_name}
+                            type="text"
+                            onChange={handleChange}
+                            value={values.last_name}
+                            onBlur={handleBlur}
+                            name="last_name" />
+
+                        <Input
+                            placeholder={detail.email ? detail.email : "email"}
+                            type="email"
+                            onChange={handleChange}
+                            value={values.email}
+                            onBlur={handleBlur}
+                            name="email" />
+                        <Input
+                            placeholder={detail.phone ? detail.phone : "phone"}
+                            type="tel"
+                            onChange={handleChange}
+                            value={values.phone}
+                            onBlur={handleBlur}
+                            name="phone" />
+                        <Input
+                            placeholder={detail.facebook ? detail.facebook : "facebook"}
+                            type="text"
+                            onChange={handleChange}
+                            value={values.facebook}
+                            onBlur={handleBlur}
+                            name="facebook" />
+                        <Input
+                            placeholder={detail.instagram ? detail.instagram : "instagram"}
+                            type="text"
+                                onBlur={handleBlur}
+                            onChange={handleChange}
+                            value={values.instagram}
+                            name="instagram" />
+                        <Input
+                            placeholder={detail.twitter ? detail.twitter : "twitter"}
+                            type="text"
+                            onChange={handleChange}
+                            value={values.twitter}
+                            onBlur={handleBlur}
+                            name="twitter" />
+                        <Input
+                            placeholder={detail.linkedin ? detail.linkedin : "linkedin"}
+                            type="text"
+                            onChange={handleChange}
+                            value={values.linkedin}
+                            onBlur={handleBlur}
+                            name="linkedin" />
+                        <Input
+                            placeholder={detail.state ? detail.state : "state"}
+                            type="text"
+                            onChange={handleChange}
+                            value={values.state}
+                            onBlur={handleBlur}
+                            name="state" />
+                        <Input
+                            placeholder="User image"
+                            type="file"
+                            onChange={handleChange}
+                            value={values.avatar}
+                            name="avatar"
+                            id="coverImage"
                         />
-                    <ErrMsg>{touched.subject && errors.subject ? errors.subject : null}</ErrMsg>
-                    <TextArea 
-                        placeholder="Message"
-                        value={values.message}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        name="message"></TextArea>
-                    <ErrMsg>{touched.message && errors.message ? errors.message : null}</ErrMsg>
+                        <Button
+                            type="submit">Update Contact</Button>
+                    </Form>
+                    )}
+                </Formik>
 
-                    <Button type="submit"> <i class="far fa-paper-plane"></i> Send mail</Button>
-                </Form>
-            )}
-            </Formik>
-        </Container>
-    </Body>
+            </Container>
+
+            <Container>
+                <Small>
+                    <p>Send mail to {detail.first_name}</p>
+                </Small>
+                <Formik
+                    initialValues={{
+                        subject: "",
+                        message: ""
+                    }}
+                    validationSchema={validateMail}
+                    onSubmit={ async (values) => {
+                        console.log(values)
+                        await sendMail(values, id)
+                        // console.log(id)
+                    }}
+                >
+                    {({ values, errors, handleBlur, handleChange, handleSubmit, touched }) => (
+                        <Form onSubmit={handleSubmit}>
+                            <Input
+                                value={values.subject}
+                                onBlur={handleBlur}
+                                onChange={handleChange}
+                                placeholder="Subject"
+                                name="subject"
+                                type="text"
+                            />
+                            <ErrMsg>{touched.subject && errors.subject ? errors.subject : null}</ErrMsg>
+                            <TextArea
+                                placeholder="Message"
+                                value={values.message}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                name="message"></TextArea>
+                            <ErrMsg>{touched.message && errors.message ? errors.message : null}</ErrMsg>
+
+                            <Button type="submit"> <i className="far fa-paper-plane"></i> Send mail</Button>
+                        </Form>
+                    )}
+                </Formik>
+            </Container>
+        </Body>
     </>
 }
 
-const mapStateToProps = (state, ownProps)=>{
+const mapStateToProps = (state, ownProps) => {
     let id = ownProps.match.params.id
     return {
-        detail : state.contactReducer.contacts.data.find(detail => detail.id === id),
-        sendMail : state.sendMailReducer
+        detail: state.contactReducer.contacts.data.find(detail => detail.id === id),
+        // detail: state.contactReducer,
+        sendMail: state.sendMailReducer
     }
 }
 
-export default connect(mapStateToProps)(DetailPage)
+export default connect(mapStateToProps, { sendMail })(DetailPage)

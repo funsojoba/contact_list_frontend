@@ -7,9 +7,14 @@ import NotFound from './pages/notFount';
 import UserProfile from './pages/user';
 import DetailPage from './pages/contacts/detail/detail';
 import ProtectedRoute from './protected.route';
+import Loader from "react-loader-spinner";
 
 import { Provider } from 'react-redux'
-import store from './redux/store';
+import { PersistGate } from 'redux-persist/integration/react';
+
+import getStore from './redux/store'
+
+export const {store, persistor} = getStore()
 
 function App() {
   return (
@@ -17,23 +22,26 @@ function App() {
 
       <div className="App">
         <Router>
-          <Switch>
-            <Route path="/" exact>
-              <Home></Home>
-            </Route>
-            <Route path="/login" exact>
-              <Login></Login>
-            </Route>
-            <Route path="/signup">
-              <SignUp></SignUp>
-            </Route>
+        <PersistGate loading={<Loader />} persistor={persistor}>
+            <Switch>
+              <Route path="/" exact>
+                <Home></Home>
+              </Route>
+              <Route path="/login" exact>
+                <Login></Login>
+              </Route>
+              <Route path="/signup">
+                <SignUp></SignUp>
+              </Route>
 
-            <ProtectedRoute path="/contacts" exact component={Contact} />
-            <ProtectedRoute path="/user" exact component={UserProfile} />
-            <ProtectedRoute path="/detail/:id" exact component={DetailPage} />
+              <ProtectedRoute path="/contacts" exact component={Contact} />
+              <ProtectedRoute path="/user" exact component={UserProfile} />
+              <ProtectedRoute path="/detail/:id" exact component={DetailPage} />
 
-            <Route component={NotFound} />
-          </Switch>
+              <Route component={NotFound} />
+            
+            </Switch>
+        </PersistGate>
         </Router>
       </div>
     </Provider>

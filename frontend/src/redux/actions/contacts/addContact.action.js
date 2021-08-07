@@ -21,6 +21,9 @@ const addContact = (payload)=> dispatch =>{
     .then(res =>{
         console.log(res.data)
         dispatch(addContactSuccess(res.data))
+        setInterval(function () {
+            window.location = "/contacts";
+        }, 1000);
     }).catch(err =>{
         console.log("payload:", payload)
         
