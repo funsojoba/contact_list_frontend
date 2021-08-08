@@ -36,7 +36,7 @@ const DetailPage = ({ sendMail, match, updateContact, getContactDetail, contactD
     const lastInitial = contactDetailData.last_name.slice(0, 1).toUpperCase()
     return <>
         <ToastContainer />
-        <Header count={firstInitial + lastInitial}  />
+        <Header count={firstInitial + lastInitial} display="none" />
         <DeleteModal onClick={()=>deleteContact(id)} name={contactDetailData.first_name} display={toggleModal ? 'flex' : 'none'} close={() => setToggleModal(false)}></DeleteModal>
         <Body>
             <Arrow onClick={previous}>
