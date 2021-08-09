@@ -16,11 +16,12 @@ import sendMail from "../../../redux/actions/contacts/sendMail.action";
 import updateContact from "../../../redux/actions/contacts/updateContact.action";
 import getContactDetail from "../../../redux/actions/contacts/contactDetail.action";
 import deleteContact from "../../../redux/actions/contacts/deleteContact.action";
+import getContactAvatar from "../../../redux/actions/contacts/contactAvatar.action";
 
 import { Body, Container, DetailSection, ImageDiv, Name, NumberDiv, Socials, DeleteDiv, Form, Small, Arrow, ErrMsg } from './detailStyle'
 import validateMail from "./validateMail";
 
-const DetailPage = ({ sendMail, match, updateContact, getContactDetail, contactDetailData, deleteContact }) => {
+const DetailPage = ({ sendMail, match, updateContact, getContactDetail, contactDetailData, deleteContact, getContactAvatar }) => {
     let id = match.params.id
 
     useEffect(()=> getContactDetail(id), [getContactDetail, id])
@@ -53,6 +54,12 @@ const DetailPage = ({ sendMail, match, updateContact, getContactDetail, contactD
                         <Formik
                             validationSchema={validateFile}
                             initialValues={{avatar:""}}
+                            onSubmit={async values =>{
+                                const imageInput = document.querySelector('#avatar')
+                                let data = new FormData()
+                                data.append('avatar', imageInput.files[0])
+                                getContactAvatar(data, id)
+                            }}
                         >
                             {({values, errors, touched, handleBlur, handleChange, handleSubmit})=>(
                                 <Form onSubmit={handleSubmit}>
@@ -61,7 +68,9 @@ const DetailPage = ({ sendMail, match, updateContact, getContactDetail, contactD
                                         name="avatar"
                                         value={values.avatar}
                                         onBlur={handleBlur}
-                                        onChange={handleChange} />
+                                        onChange={handleChange} 
+                                        id="avatar"
+                                        />
                                     <ErrMsg>{touched.avatar && errors.avatar ? errors.avatar : null}</ErrMsg>
                                     <Button type="submit">Upload</Button>
                                 </Form>
@@ -247,4 +256,4 @@ const mapStateToProps = (state, ownProps) => {
     }
 }
 
-export default connect(mapStateToProps, { sendMail, updateContact, getContactDetail, deleteContact })(DetailPage)
+export default connect(mapStateToProps, { sendMail, updateContact, getContactDetail, deleteContact, getContactAvatar })(DetailPage)
