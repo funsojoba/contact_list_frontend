@@ -1,4 +1,4 @@
-import { FETCH_CONTACT, FETCH_CONTACT_FAILED, FETCH_CONTACT_SUCCESSFUL } from "../actions/types";
+import { FETCH_CONTACT, FETCH_CONTACT_FAILED, FETCH_CONTACT_SUCCESSFUL, SEARCH } from "../actions/types";
 
 const initialState = {
     contacts:[]
@@ -21,6 +21,10 @@ const contactReducer = (state=initialState, action)=>{
                 ...state,
                 contacts:action.payload
             }
+        // case SEARCH:
+        //     return{
+        //         contacts: state.filter()
+        //     }
 
         default:
             return state

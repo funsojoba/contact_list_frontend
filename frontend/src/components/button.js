@@ -9,7 +9,7 @@ const ButtonDiv = styled.button`
     border-radius:12px;
     border:none;
     transition: all ease-in 300ms;
-    width:100%;
+    width:${props => props.width ? props.width : '100%'};
     box-sizing:border-box;
     cursor:pointer;
     border:${props => props.border ? props.border : 'solid 1px #10BDA8'};
@@ -20,13 +20,14 @@ const ButtonDiv = styled.button`
     }
 `
 
-const Button = ({ children, onClick, background, color, type, border})=>{
+const Button = ({ children, onClick, background, color, type, border, width})=>{
     return <ButtonDiv 
         background={background} 
         onClick={onClick}
         color={color}
         type={type}
         border={border}
+        width={width}
         >
         {children}
     </ButtonDiv>

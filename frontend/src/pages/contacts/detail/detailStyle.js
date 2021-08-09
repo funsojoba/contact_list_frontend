@@ -32,6 +32,29 @@ export const ImageDiv = styled.div`
     background:url(${props => props.avatar ? props.avatar : "https://res.cloudinary.com/ddl2pf4qh/image/upload/v1627605865/contact_api/avatar3_chs26r.png"});
     background-size:cover;
     background-position: center;
+    position:relative;
+    overflow:hidden;
+    cursor: pointer;
+
+    .photo{
+        width:100%;
+        height:100%;
+        border-radius:50%;
+        background: rgba(0,0,0,.5);
+        color:#fff;
+        display:flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        bottom:0;
+        left:0;
+        transition:all ease 200ms;
+        transform:scale(0)
+    }
+
+    &:hover .photo{
+        transform: scale(1)
+    }
 `
 
 export const Name = styled.div`

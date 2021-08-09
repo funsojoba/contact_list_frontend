@@ -3,9 +3,12 @@ import TextArea from "../../../components/textArea";
 import Button from "../../../components/button";
 import Header from "../../../components/navbar";
 import DeleteModal from "../../../components/deleteModal";
+import Modal from "../../../components/modal";
 import { Formik } from "formik";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+
+import validateFile from "../../../validateFile";
 
 import { connect } from "react-redux";
 import { useState, useEffect } from "react";
@@ -28,6 +31,8 @@ const DetailPage = ({ sendMail, match, updateContact, getContactDetail, contactD
 
     const [toggleModal, setToggleModal] = useState(false)
 
+    const [openModal, setOpenModal] = useState(false)
+
     const toggle = () => {
         setToggleModal(!toggleModal)
     }
@@ -36,7 +41,7 @@ const DetailPage = ({ sendMail, match, updateContact, getContactDetail, contactD
     const lastInitial = contactDetailData.last_name.slice(0, 1).toUpperCase()
     return <>
         <ToastContainer />
-        <Header count={firstInitial + lastInitial} display="none" />
+        <Header  display="none" count={firstInitial + lastInitial } />
         <DeleteModal onClick={()=>deleteContact(id)} name={contactDetailData.first_name} display={toggleModal ? 'flex' : 'none'} close={() => setToggleModal(false)}></DeleteModal>
         <Body>
             <Arrow onClick={previous}>
@@ -44,7 +49,28 @@ const DetailPage = ({ sendMail, match, updateContact, getContactDetail, contactD
             </Arrow>
             <Container>
                 <DetailSection>
-                    <ImageDiv avatar={contactDetailData.avatar} />
+                    <Modal display={openModal ? "flex" : "none"} close={()=>setOpenModal(false)}>
+                        <Formik
+                            validationSchema={validateFile}
+                            initialValues={{avatar:""}}
+                        >
+                            {({values, errors, touched, handleBlur, handleChange, handleSubmit})=>(
+                                <Form onSubmit={handleSubmit}>
+                                    <Input 
+                                        type="file"
+                                        name="avatar"
+                                        value={values.avatar}
+                                        onBlur={handleBlur}
+                                        onChange={handleChange} />
+                                    <ErrMsg>{touched.avatar && errors.avatar ? errors.avatar : null}</ErrMsg>
+                                    <Button type="submit">Upload</Button>
+                                </Form>
+                            )}
+                        </Formik>
+                    </Modal>
+                    <ImageDiv onClick={()=> setOpenModal(true)} avatar={contactDetailData.avatar}>
+                        <div className="photo"><i className="fas fa-camera fa-2x"></i></div>
+                    </ImageDiv>
 
                     <Name>
                         <h3>{contactDetailData.first_name} {contactDetailData.last_name}</h3>

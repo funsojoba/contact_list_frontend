@@ -1,9 +1,15 @@
-import { Body, Div, Image, Container, H3, Paragraph } from './style'
+import { Body, Div, Image, Container, H3, Paragraph, Form, ErrMsg } from './style'
 import Button from '../../components/button'
 import Header from '../../components/navbar'
 import { Link } from 'react-router-dom'
+import Input from '../../components/input'
+import Modal from '../../components/modal'
 
-// import { useEffect } from 'react'
+import { useState } from 'react'
+import { Formik } from 'formik'
+import validate from './validate'
+import validateFile from '../../validateFile'
+
 
 import { connect } from 'react-redux'
 
@@ -11,6 +17,8 @@ import fetchUser from '../../redux/actions/contacts/user.action'
 
 const UserProfile = ({ getUser, userData }) => {
     // useEffect(() => { getUser() }, [getUser])
+    const [openModal, setOpenModal] = useState(false)
+    const [openResetPassword, setResetPassword] = useState(false)
 
     const { first_name, last_name, email } = userData.user
 
@@ -19,8 +27,27 @@ const UserProfile = ({ getUser, userData }) => {
     return <Body>
         <Header count={first_name && last_name ? (firstInitial.toUpperCase() + lastInitial.toUpperCase()) : null} display="none" />
         <Div>
+            <Modal display={openModal ? 'flex' : 'none'} close={()=>setOpenModal(false)} >
+                <Formik
+                    initialValues={{ avatar: "" }}
+                    validationSchema={validateFile}>
+                    {({ touched, errors, values, handleChange, handleSubmit, handleBlur }) => (
+                        <Form onSubmit={handleSubmit}>
+                            <Input type="file"
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                value={values.avatar}
+                                name="avatar" />
+                            <ErrMsg>{touched.avatar && errors.avatar ? errors.avatar : null}</ErrMsg>
+                            <Button type="submit">Upload</Button>
+                        </Form>
+                    )}
+                </Formik>
+            </Modal>
             <Container>
-                <Image background={userData.user.avatar}></Image>
+                <Image background={userData.user.avatar} onClick={()=>setOpenModal(true)} >
+                    <div className="photo"><i className="fas fa-camera fa-2x"></i></div>
+                </Image>
             </Container>
 
             <Container column="column">
@@ -28,9 +55,37 @@ const UserProfile = ({ getUser, userData }) => {
                 <Paragraph>{email}</Paragraph>
             </Container>
 
+            <Modal display={openResetPassword ? 'flex' : 'none'} close={()=> setResetPassword(false)} >
+                <Formik
+                    initialValues={{password:"", passwordConfirmation:""}}
+                    validationSchema={validate}
+                >
+                    {({values, handleBlur, handleChange, handleSubmit, touched, errors})=>(
+                        <Form onSubmit={handleSubmit}>
+                            <Input 
+                                placeholder="New password" 
+                                type="password"
+                                onBlur={handleBlur}
+                                onChange={handleChange}
+                                value={values.password} 
+                                name="password"
+                                />
+                            <ErrMsg>{touched.password && errors.password ? errors.password : null}</ErrMsg>
+                            <Input 
+                                placeholder="Confirm new password" 
+                                type="password"
+                                onBlur={handleBlur}
+                                onChange={handleChange}
+                                value={values.passwordConfirmation}
+                                name="passwordConfirmation" />
+                            <ErrMsg>{touched.passwordConfirmation && errors.passwordConfirmation ? errors.passwordConfirmation : null}</ErrMsg>
+                            <Button type="submit">Submit</Button>
+                        </Form>
+                    )}
+                </Formik>
+            </Modal>
             <Container>
-                <Button>update profile</Button> &nbsp;
-                <Button background="#fff" color="#10BDA8">reset password</Button>
+                <Button width="60%" background="#fff" color="#10BDA8" onClick={()=> setResetPassword(true)}>reset password</Button>
             </Container>
             <>
                 <Paragraph>Back to <Link to="/contacts">Dashboard</Link></Paragraph>
