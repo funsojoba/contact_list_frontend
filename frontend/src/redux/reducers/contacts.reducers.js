@@ -21,10 +21,6 @@ const contactReducer = (state=initialState, action)=>{
                 ...state,
                 contacts:action.payload
             }
-        // case SEARCH:
-        //     return{
-        //         contacts: state.filter()
-        //     }
 
         default:
             return state

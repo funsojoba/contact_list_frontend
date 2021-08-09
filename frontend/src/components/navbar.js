@@ -3,6 +3,10 @@ import { Link } from "react-router-dom"
 import Input from "./input"
 import Img from "./img"
 
+import { Formik } from "formik"
+import { useState } from "react"
+import { connect } from "react-redux"
+import { searchContact } from "../redux/actions/contacts/contact.action.js"
 
 const HeaderDiv = styled.div`
     background:#fff;
@@ -45,7 +49,15 @@ const HeaderContent = styled.div`
     justify-content: center;
 `
 
-const Header = ({ count, display }) => {
+const Header = ({ count, display, searchContact }) => {
+    const [search, setSearch] = useState("")
+
+    const handleChange = (e) => {
+        setSearch(e.target.value)
+        console.log(search)
+        searchContact(search)
+    }
+
     return <HeaderDiv>
         <HeaderContent>
             <Logo>
@@ -55,7 +67,7 @@ const Header = ({ count, display }) => {
             </Logo>
         </HeaderContent>
         <HeaderContent display={display}>
-            <Input type="search" placeholder="Search" bottom='0px' />
+            <Input value={search} onChange={handleChange} type="search" placeholder="Search" bottom='0px' />
         </HeaderContent>
         <HeaderContent>
             <CounterDiv>{count}</CounterDiv>
@@ -63,4 +75,9 @@ const Header = ({ count, display }) => {
     </HeaderDiv>
 }
 
-export default Header
+
+const mapStateToProps = state =>({
+    contactState : state.contactReducer.contacts
+})
+
+export default connect(mapStateToProps, { searchContact })(Header)

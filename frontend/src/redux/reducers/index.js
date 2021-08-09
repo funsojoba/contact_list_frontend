@@ -8,13 +8,14 @@ import sendMailReducer from './sendMail.reducer'
 import updateContactReducer from './updateContact.reducer'
 import contactDetailReducer from './contactDetail.reducer'
 import deleteContactReducer from './deleteContact.reducer'
+import userAvatarReducer from './userAvatar.reducer'
 
 import storage from 'redux-persist/lib/storage'
 import { persistReducer } from 'redux-persist'
 
 
 const persistConfig = {
-    key:'root',
+    key: 'root',
     storage
 }
 
@@ -27,7 +28,8 @@ const rootReducer = combineReducers({
     sendMailReducer,
     updateContactReducer,
     contactDetailReducer,
-    deleteContactReducer
+    deleteContactReducer,
+    userAvatarReducer
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)

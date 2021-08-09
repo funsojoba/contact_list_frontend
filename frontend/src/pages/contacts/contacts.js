@@ -14,6 +14,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import getContact from "../../redux/actions/contacts/contact.action.js.js"
 import fetchUser from "../../redux/actions/contacts/user.action"
+import { searchContact } from "../../redux/actions/contacts/contact.action.js.js"
 
 import MailModal from "../../components/mailModal"
 
@@ -26,7 +27,7 @@ import {
 } from './styles'
 
 
-const Contact = ({ contactsData, getContact, userData, getUser }) => {
+const Contact = ({ contactsData, getContact, userData, getUser, searchContact }) => {
     const [toggle, setToggle] = useState(false)
     const [toggleShow, setShow] = useState(false)
     const [mailModal, setMailModal] = useState(false)
@@ -98,7 +99,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     getContact: () => dispatch(getContact()),
-    getUser: () => dispatch(fetchUser())
+    getUser: () => dispatch(fetchUser()),
+    searchContact: ()=> dispatch(searchContact())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Contact)

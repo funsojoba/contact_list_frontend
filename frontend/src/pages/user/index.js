@@ -9,13 +9,14 @@ import { useState } from 'react'
 import { Formik } from 'formik'
 import validate from './validate'
 import validateFile from '../../validateFile'
+import { ToastContainer } from 'react-toastify'
 
 
 import { connect } from 'react-redux'
 
-import fetchUser from '../../redux/actions/contacts/user.action'
+import getUserAvatar from '../../redux/actions/contacts/userAvater.action'
 
-const UserProfile = ({ getUser, userData }) => {
+const UserProfile = ({ userData, getUserAvatar }) => {
     // useEffect(() => { getUser() }, [getUser])
     const [openModal, setOpenModal] = useState(false)
     const [openResetPassword, setResetPassword] = useState(false)
@@ -27,17 +28,26 @@ const UserProfile = ({ getUser, userData }) => {
     return <Body>
         <Header count={first_name && last_name ? (firstInitial.toUpperCase() + lastInitial.toUpperCase()) : null} display="none" />
         <Div>
+        <ToastContainer />
             <Modal display={openModal ? 'flex' : 'none'} close={()=>setOpenModal(false)} >
                 <Formik
                     initialValues={{ avatar: "" }}
-                    validationSchema={validateFile}>
+                    validationSchema={validateFile}
+                    onSubmit={async values =>{
+                        const imageInput = document.querySelector("#avatar")
+                        let data = new FormData()
+                        data.append('avatar', imageInput.files[0])
+                        console.log(imageInput.files)
+                        await getUserAvatar(data)
+                    }}>
                     {({ touched, errors, values, handleChange, handleSubmit, handleBlur }) => (
                         <Form onSubmit={handleSubmit}>
                             <Input type="file"
                                 onChange={handleChange}
                                 onBlur={handleBlur}
                                 value={values.avatar}
-                                name="avatar" />
+                                name="avatar"
+                                id="avatar" />
                             <ErrMsg>{touched.avatar && errors.avatar ? errors.avatar : null}</ErrMsg>
                             <Button type="submit">Upload</Button>
                         </Form>
@@ -99,8 +109,5 @@ const mapStateToProps = (store) => ({
     userData: store.userReducer
 })
 
-const mapDispatchToProps = dispatch => ({
-    getUser: dispatch(fetchUser())
-})
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserProfile)
+export default connect(mapStateToProps, { getUserAvatar} )(UserProfile)

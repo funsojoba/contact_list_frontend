@@ -1,4 +1,4 @@
-import { FETCH_CONTACT_SUCCESSFUL, FETCH_CONTACT_FAILED } from "../types";
+import { FETCH_CONTACT_SUCCESSFUL, FETCH_CONTACT_FAILED, SEARCH } from "../types";
 import axios from 'axios'
 import { headers } from '../../../request'
 
@@ -14,6 +14,14 @@ const fetchContactSuccess = (payload) => {
 const fetchContactFailed = (payload) => {
     return {
         type: FETCH_CONTACT_FAILED,
+        payload
+    }
+}
+
+export const searchContact = (payload)=>{
+    console.log(payload)
+    return {
+        type: SEARCH,
         payload
     }
 }
